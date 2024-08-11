@@ -11,10 +11,10 @@
 <rfc category="std" docName="draft-mh-6man-icmpv6-reflection-00"
      ipr="trust200902" updates="8335">
   <front>
-    <title abbrev="ICMPv6 Reflection">Internet Control Message Protocol (ICMPv6) Reflection</title>
+    <title abbrev="ICMPv6 Reflection">Internet Control Message Protocol
+    (ICMPv6) Reflection</title>
 
-    <author fullname="Tal Mizrahi" initials="T."
-            surname="Mizrahi">
+    <author fullname="Tal Mizrahi" initials="T." surname="Mizrahi">
       <organization abbrev="">Huawei</organization>
 
       <address>
@@ -40,7 +40,6 @@
       </address>
     </author>
 
-
     <author fullname="Tianran Zhou" initials="T." surname="Zhou">
       <organization abbrev="">Huawei</organization>
 
@@ -54,10 +53,10 @@
 
           <country>China</country>
         </postal>
+
         <email>zhoutianran@huawei.com</email>
       </address>
     </author>
-
 
     <author fullname="Ron Bonica" initials="R." surname="Bonica">
       <organization>Juniper Networks</organization>
@@ -71,9 +70,7 @@
       </address>
     </author>
 
-
-    <author fullname="Shahar Belkar" initials="S."
-            surname="Belkar">
+    <author fullname="Shahar Belkar" initials="S." surname="Belkar">
       <organization abbrev="">Huawei</organization>
 
       <address>
@@ -107,9 +104,7 @@
       </address>
     </author>
 
-
-    <author fullname="Reuven Cohen" initials="R."
-            surname="Cohen">
+    <author fullname="Reuven Cohen" initials="R." surname="Cohen">
       <organization abbrev="">Huawei</organization>
 
       <address>
@@ -135,7 +130,6 @@
       </address>
     </author>
 
-
     <author fullname="Justin Iurman" initials="J." surname="Iurman">
       <organization abbrev="ULiege">Universite de Liege</organization>
 
@@ -156,76 +150,81 @@
       </address>
     </author>
 
-
-
     <date year="2024"/>
 
     <workgroup>Network</workgroup>
-
 
     <keyword>ICMP</keyword>
 
     <keyword>ICMPv6</keyword>
 
-
     <abstract>
-      <t>This document describes the ICMPv6 Reflection utility, which enables a two-way 
-	  message exchange that can be used for probing and for diagnostic purposes.
-	  ICMPv6 Reflection uses a request-response handshake that is similar to ICMPv6 
-	  Echo, except that after a request is sent, its corresponding 
-	  reply includes the request message itself or a subset of its fields as specified in the request. 
-	  Specifically, the IPv6 header of the request message and its IPv6 extension headers, if they are present, can be included in the reply. 
-	  Notably, network operators can use 
-	  ICMPv6 Reflection to determine how IPv6 extension headers have
-      been altered by transit nodes.</t>
+      <t>This document describes the ICMPv6 Reflection utility, which enables
+      a two-way message exchange that can be used for probing and for
+      diagnostic purposes. ICMPv6 Reflection uses a request-response handshake
+      that is similar to ICMPv6 Echo, except that after a request is sent, its
+      corresponding reply includes the request message itself or a subset of
+      its fields as specified in the request. Specifically, the IPv6 header of
+      the request message and its IPv6 extension headers, if they are present,
+      can be included in the reply. Notably, network operators can use ICMPv6
+      Reflection to determine how IPv6 extension headers have been altered by
+      transit nodes.</t>
     </abstract>
   </front>
 
   <middle>
     <section title="Introduction">
+      <t>ICMPv6 Echo <xref target="RFC4443"/> is very commonly used for
+      diagnostic purposes ("Ping"), and is based on a two-way exchange: Node A
+      sends an Echo Request to Node B, and Node B responds with an Echo Reply
+      to Node A. The data (payload) of the Echo Reply message is identical to
+      the data of the corresponding Echo Request message.</t>
 
-      <t>ICMPv6 Echo <xref target="RFC4443"/> is very commonly used for 
-	  diagnostic purposes ("Ping"), and is based on a two-way exchange: 
-	  Node A sends an Echo Request to Node B, and Node B responds with an 
-	  Echo Reply to Node A. The data (payload) of the Echo Reply message
-	  is identical to the data of the corresponding Echo Request message.</t> 
-	  
-	  <t>This document defines ICMPv6 Reflection, a procedure that is similar   
-	  to the ICMPv6 Echo exchange, with the exception that the reply includes the corresponding 
-	  request or parts of it. Specifically, IPv6 extension headers of 
-	  the request, if they are present, can be included in the 
-	  reply.</t>
-	  
-	  <t>The ICMPv6 Reflection procedure uses Extended Echo Request and
-	  Extended Echo Reply messages. As defined in <xref target="RFC8335"/>, each of these message 
-	  types can include an extension structure <xref target="RFC4884"/>. 
-	  ICMPv6 Reflection uses these extension structures to reflect the request message or a subset of its fields back to the sender.
-	  This is performed by specific extension objects that are defined in this document.</t>
+      <t>This document defines ICMPv6 Reflection, a procedure that is similar
+      to the ICMPv6 Echo exchange, with the exception that the reply includes
+      the corresponding request or parts of it. Specifically, IPv6 extension
+      headers of the request, if they are present, can be included in the
+      reply.</t>
 
-	  <t>Diagnostic tools, such as variants of Ping, can use ICMPv6 Reflection,
-	  enabling the sender to receive information about the request message
-	  which is not available with ICMPv6 Echo, such as the IPv6 Hop Limit of
-	  the request, or parts its IPv6 extension headers.</t>
-	  	  
-	  <t>An example of the ICMPv6 Reflection procedure is illustrated
-	  in <xref target="ReflectionProcedure"/>. A sends an Extended Echo Request Message
-	  to B, which respondes with an Extended Echo Reply. The request includes
-	  an ICMPv6 extension header, followed by the 'Reflect All' extension object, which is defined in the current document.
-	  This object indicates to node B that the reply is expected to include the request message itself. The payload of this object is a placeholder for the corresponding object in the reply.
-	  Node B generates an Extended Echo Reply message, which includes the 'Reflect All' extension object. 
-	  This object carries the corresponding request message, starting from its IPv6 header, and including as much of the request message without exceeding the length of the object, which is equal to the length of the object in the request.
-	  </t>
+      <t>The ICMPv6 Reflection procedure uses Extended Echo Request and
+      Extended Echo Reply messages. As defined in <xref target="RFC8335"/>,
+      each of these message types can include an extension structure <xref
+      target="RFC4884"/>. ICMPv6 Reflection uses these extension structures to
+      reflect the request message or a subset of its fields back to the
+      sender. This is performed by specific extension objects that are defined
+      in this document.</t>
 
-	  <t>Another example of ICMPv6 Reflection is depicted
-	  in <xref target="ReflectHBH"/>. In this example the extension object in the request indicates that the reply is expected to include the Hop-by-Hop Options header.
-	  In response, B incorporates the Hop-by-Hop Options header in the reply. For example, if the Hop-by-Hop Options header includes an IOAM Trace Option <xref target="RFC9197"/>, the reply provides node A with the IOAM trace information of the request message.
-	  </t>
+      <t>Diagnostic tools, such as variants of Ping, can use ICMPv6
+      Reflection, enabling the sender to receive information about the request
+      message which is not available with ICMPv6 Echo, such as the IPv6 Hop
+      Limit of the request, or parts its IPv6 extension headers.</t>
 
-	  
+      <t>An example of the ICMPv6 Reflection procedure is illustrated in <xref
+      target="ReflectionProcedure"/>. A sends an Extended Echo Request Message
+      to B, which respondes with an Extended Echo Reply. The request includes
+      an ICMPv6 extension header, followed by the 'Reflect All' extension
+      object, which is defined in the current document. This object indicates
+      to node B that the reply is expected to include the request message
+      itself. The payload of this object is a placeholder for the
+      corresponding object in the reply. Node B generates an Extended Echo
+      Reply message, which includes the 'Reflect All' extension object. This
+      object carries the corresponding request message, starting from its IPv6
+      header, and including as much of the request message without exceeding
+      the length of the object, which is equal to the length of the object in
+      the request.</t>
 
-          <figure align="center" anchor="ReflectionProcedure"
-                  title="Example 1: The ICMPv6 Reflection Procedure">
-            <artwork align="left"><![CDATA[
+      <t>Another example of ICMPv6 Reflection is depicted in <xref
+      target="ReflectHBH"/>. In this example the extension object in the
+      request indicates that the reply is expected to include the Hop-by-Hop
+      Options header. In response, B incorporates the Hop-by-Hop Options
+      header in the reply. For example, if the Hop-by-Hop Options header
+      includes an IOAM Trace Option <xref target="RFC9197"/>, the reply
+      provides node A with the IOAM trace information of the request
+      message.</t>
+
+      <figure align="center" anchor="ReflectionProcedure"
+              title="Example 1: The ICMPv6 Reflection Procedure">
+        <artwork align="left"><![CDATA[
                        +----------------------------+
                        |        IPv6 Header         |
                        |+ optional extension headers|
@@ -270,13 +269,11 @@
                    |   | the object length          |
                    +-  +----------------------------+
            ]]></artwork>
-          </figure>
+      </figure>
 
-
-
-          <figure align="center" anchor="ReflectHBH"
-                  title="Example 2: ICMPv6 Reflection of Hop-by-Hop Option">
-            <artwork align="left"><![CDATA[
+      <figure align="center" anchor="ReflectHBH"
+              title="Example 2: ICMPv6 Reflection of Hop-by-Hop Option">
+        <artwork align="left"><![CDATA[
                        +----------------------------+
                        |        IPv6 Header         |
                        |+ optional extension headers|
@@ -317,27 +314,23 @@
     Extended Echo  |   |  length                    |
           Request  +-  +----------------------------+
            ]]></artwork>
-          </figure>
+      </figure>
 
+      <t>There is a number of protocols, both existing and in-progress, that
+      define IPv6 extension headers that can be used for tracing the path and
+      its performance, including for example, <xref target="RFC9486"/>, <xref
+      target="I-D.filsfils-ippm-path-tracing"/>, <xref
+      target="I-D.ali-spring-ioam-srv6"/>, <xref
+      target="I-D.kumar-ippm-ifa"/>. These extensions are used for collecting
+      information along the path of a packet. The collected information is
+      then exported to a central collector or controller for further
+      processing. However, there is currently no straightforward way of
+      sending such trace information back to the sender, while clearly in some
+      cases this trace information is most relevant to the sender.</t>
 
-	  
-	  <t>There is a number of protocols, both existing and in-progress,
-	  that define IPv6 extension headers that can be used for tracing the path
-	  and its performance, including for example, 
-	  <xref target="RFC9486"/>,
-	  <xref target="I-D.filsfils-ippm-path-tracing"/>,
-	  <xref target="I-D.ali-spring-ioam-srv6"/>,
-	  <xref target="I-D.kumar-ippm-ifa"/>. These extensions are used for 
-	  collecting information along the path of a packet. The collected 
-	  information is then exported to a central collector or controller for
-	  further processing. However, there is currently no straightforward way
-	  of sending such trace information back to the sender, while clearly
-	  in some cases this trace information is most relevant to the sender.</t>
-
-	  <t>ICMPv6 Reflection enables collected trace information along with other 
-	  information from the IPv6 header and extension headers to be echoed back to the sender in a strightforward 
-	  and generic way.</t> 
-
+      <t>ICMPv6 Reflection enables collected trace information along with
+      other information from the IPv6 header and extension headers to be
+      echoed back to the sender in a strightforward and generic way.</t>
     </section>
 
     <section anchor="Conventions" title="Conventions">
@@ -356,26 +349,25 @@
             <t hangText="ICMP:">Internet Control Message Protocol</t>
 
             <t hangText="MTU:">Maximum Transmission Unit</t>
-
           </list></t>
       </section>
     </section>
 
-
     <section anchor="TheorySec" title="Theory of Operation">
-	  <t>An ICMPv6 Reflection handshake is initiated by a sender who
-	  sends an Extended Echo Request message. Upon receiving this message,
-	  the responder generates and sends an Extended Echo Reply message
-	  back to the sender.</t>
-	  
-	  <t>As shown in the <xref target="ReflectionFormats"/>, the ICMPv6 Extended Echo Request Message
-	  includes an ICMP extension header <xref target="RFC4884"/>, followed by one or more
-	  extension objects. The extension objects used in the Reflection procedure
-	  are called Reflection objects, and their format is defined in this document.</t>
-	  
-          <figure align="center" anchor="ReflectionFormats"
-                  title="ICMPv6 Reflection Message Formats">
-            <artwork align="left"><![CDATA[
+      <t>An ICMPv6 Reflection handshake is initiated by a sender who sends an
+      Extended Echo Request message. Upon receiving this message, the
+      responder generates and sends an Extended Echo Reply message back to the
+      sender.</t>
+
+      <t>As shown in the <xref target="ReflectionFormats"/>, the ICMPv6
+      Extended Echo Request Message includes an ICMP extension header <xref
+      target="RFC4884"/>, followed by one or more extension objects. The
+      extension objects used in the Reflection procedure are called Reflection
+      objects, and their format is defined in this document.</t>
+
+      <figure align="center" anchor="ReflectionFormats"
+              title="ICMPv6 Reflection Message Formats">
+        <artwork align="left"><![CDATA[
 
        +----------------------------+   +----------------------------+
        |        IPv6 Header         |   |        IPv6 Header         |
@@ -401,41 +393,41 @@ Obj  | +----------------------------+   +----------------------------+
        +-- Extended Echo Request ---+   +--- Extended Echo Reply ----+
 
            ]]></artwork>
-          </figure>
-	  
-	  <t>The ICMPv6 Extended Echo Reply message in the Reflection procedure
-	  has a similar format. It also consists of the ICMP extension header, 
-	  followed by the set of objects that were received in the request message.</t>
-	  
-	  <t>Several object classes are defined in this document (see <xref target="RefObjSec"/>).
-	  Each object class specifies the information that is expected to be included in the reply.
-	  Each Reflection object has an object payload that is used as a placeholder
-	  in the request message. In the reply message the object payload contains the
-	  reflected information that was requested by the sender.</t>
+      </figure>
 
-	  <t>The request and reply include the same set of objects, and each
-	  object has the same length in the request and reply, making the request
-	  and reply symmetric in length.</t>
+      <t>The ICMPv6 Extended Echo Reply message in the Reflection procedure
+      has a similar format. It also consists of the ICMP extension header,
+      followed by the set of objects that were received in the request
+      message.</t>
 
+      <t>Several object classes are defined in this document (see <xref
+      target="RefObjSec"/>). Each object class specifies the information that
+      is expected to be included in the reply. Each Reflection object has an
+      object payload that is used as a placeholder in the request message. In
+      the reply message the object payload contains the reflected information
+      that was requested by the sender.</t>
+
+      <t>The request and reply include the same set of objects, and each
+      object has the same length in the request and reply, making the request
+      and reply symmetric in length.</t>
     </section>
 
-
     <section anchor="RefEcho" title="Reflection using the ICMP Extended Echo">
-      <t>This section describes how the Reflection functionality is performed 
-	  using the Extended Echo Request message and the Extended Echo Reply 
-	  message defined in <xref target="RFC8335"/>. Note that the current 
-	  document describes a specific way of using Extended Echo messages,
-	  including for example specific field values in the ICMPv6 header
-	  and a specific way of using the ICMP extension structure.</t>
-      
-     <section title="ICMPv6 Extended Echo Request Message">
-      <t>The ICMPv6 Extended Echo Request message is encapsulated in an IPv6 
-	  header. <xref target="ExEchoReq"/> depicts the ICMPv6 Extended Echo 
-	  Request message.</t> 
+      <t>This section describes how the Reflection functionality is performed
+      using the Extended Echo Request message and the Extended Echo Reply
+      message defined in <xref target="RFC8335"/>. Note that the current
+      document describes a specific way of using Extended Echo messages,
+      including for example specific field values in the ICMPv6 header and a
+      specific way of using the ICMP extension structure.</t>
 
-          <figure align="center" anchor="ExEchoReq"
-       title="ICMPv6 Extended Echo Request Message [RFC8335]">
-            <artwork align="left"><![CDATA[
+      <section title="ICMPv6 Extended Echo Request Message">
+        <t>The ICMPv6 Extended Echo Request message is encapsulated in an IPv6
+        header. <xref target="ExEchoReq"/> depicts the ICMPv6 Extended Echo
+        Request message.</t>
+
+        <figure align="center" anchor="ExEchoReq"
+                title="ICMPv6 Extended Echo Request Message [RFC8335]">
+          <artwork align="left"><![CDATA[
          
   0                   1                   2                   3
   0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1
@@ -447,34 +439,41 @@ Obj  | +----------------------------+   +----------------------------+
  |                 ICMP Extension Structure                      |
  +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
   ]]></artwork>
-          </figure>
+        </figure>
 
-      <t>ICMPv6 Fields:</t>
+        <t>ICMPv6 Fields:</t>
 
-	 <t>Type: Extended Echo Request. As defined in <xref target="RFC8335"/>, The value is 160.</t>
+        <t>Type: Extended Echo Request. As defined in <xref
+        target="RFC8335"/>, The value is 160.</t>
 
-	 <t>Code: MUST be set to 0.</t>
+        <t>Code: MUST be set to 0.</t>
 
-	 <t>Checksum: As defined in <xref target="RFC4443"/>.</t>
+        <t>Checksum: As defined in <xref target="RFC4443"/>.</t>
 
-	 <t>Identifier: As defined in <xref target="RFC4443"/>, the identifier to aid in matching Echo Replies to this Echo Request. May be zero.</t>
+        <t>Identifier: As defined in <xref target="RFC4443"/>, the identifier
+        to aid in matching Echo Replies to this Echo Request. May be zero.</t>
 
-	 <t>Sequence Number: As defined in <xref target="RFC4443"/>, the sequence number to aid in matching Echo Replies to this Echo Request. May be zero.</t>
+        <t>Sequence Number: As defined in <xref target="RFC4443"/>, the
+        sequence number to aid in matching Echo Replies to this Echo Request.
+        May be zero.</t>
 
-	 <t>Reserved: This field MUST be set to 0 and ignored upon receipt.</t>
+        <t>Reserved: This field MUST be set to 0 and ignored upon receipt.</t>
 
-	 <t>L (local): As defined in <xref target="RFC8335"/>. MUST be set to 1 for Reflection (see <xref target="IIOsec"/>).</t>
+        <t>L (local): As defined in <xref target="RFC8335"/>. MUST be set to 1
+        for Reflection (see <xref target="IIOsec"/>).</t>
 
-	 <t>ICMP Extension Structure: As defined in <xref target="RFC4884"/>, it contains exactly one extension header followed by one or more extension objects.</t>
-	 
-	 </section>
-	
-     <section title="ICMPv6 Extended Echo Reply Message">
-      <t>The ICMPv6 Extended Echo Reply message is encapsulated in an IPv6 header. Figure 3 depicts the ICMPv6 Extended Echo Reply message.</t>
+        <t>ICMP Extension Structure: As defined in <xref target="RFC4884"/>,
+        it contains exactly one extension header followed by one or more
+        extension objects.</t>
+      </section>
 
-          <figure align="center" anchor="ExEchoRep"
-       title="ICMPv6 Extended Echo Reply Message [RFC8335]">
-            <artwork align="left"><![CDATA[
+      <section title="ICMPv6 Extended Echo Reply Message">
+        <t>The ICMPv6 Extended Echo Reply message is encapsulated in an IPv6
+        header. Figure 3 depicts the ICMPv6 Extended Echo Reply message.</t>
+
+        <figure align="center" anchor="ExEchoRep"
+                title="ICMPv6 Extended Echo Reply Message [RFC8335]">
+          <artwork align="left"><![CDATA[
          
   0                   1                   2                   3
   0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1
@@ -486,40 +485,45 @@ Obj  | +----------------------------+   +----------------------------+
  |                 ICMP Extension Structure                      |
  +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
   ]]></artwork>
-          </figure>
+        </figure>
 
+        <t>ICMPv6 Fields:</t>
 
-	 <t>ICMPv6 Fields:</t>
+        <t>Type: Extended Echo Reply. As defined in <xref target="RFC8335"/>,
+        The value is 161.</t>
 
-	 <t>Type: Extended Echo Reply. As defined in <xref target="RFC8335"/>, The value is 161.</t>
+        <t>Code: MUST be set to 0.</t>
 
-	 <t>Code: MUST be set to 0.</t>
+        <t>Identifier: As defined in <xref target="RFC4443"/>, the identifier
+        from the corresponding Echo Request message.</t>
 
-	 <t>Identifier: As defined in <xref target="RFC4443"/>, the identifier from the corresponding Echo Request message.</t>
+        <t>Sequence Number: As defined in <xref target="RFC4443"/>, the
+        sequence number from the corresponding Echo Request message.</t>
 
-	 <t>Sequence Number: As defined in <xref target="RFC4443"/>, the sequence number from the corresponding Echo Request message.</t>
+        <t>State: As defined in <xref target="RFC8335"/>. MUST be set to 0 for
+        reflection (see <xref target="IIOsec"/>).</t>
 
-	 <t>State: As defined in <xref target="RFC8335"/>. MUST be set to 0 for reflection (see <xref target="IIOsec"/>).</t>
+        <t>Res: This field MUST be set to 0 and ignored upon receipt.</t>
 
-	 <t>Res: This field MUST be set to 0 and ignored upon receipt.</t>
+        <t>A (Active): MUST be set to 1 for reflection (see <xref
+        target="IIOsec"/>).</t>
 
-	 <t>A (Active): MUST be set to 1 for reflection (see <xref target="IIOsec"/>).</t>
+        <t>4 (IPv4): As defined in <xref target="RFC8335"/>.</t>
 
-	 <t>4 (IPv4): As defined in <xref target="RFC8335"/>.</t>
+        <t>6 (IPv6): As defined in <xref target="RFC8335"/>.</t>
 
-	 <t>6 (IPv6): As defined in <xref target="RFC8335"/>.</t>
+        <t>ICMP Extension Structure: As defined in <xref target="RFC4884"/>,
+        it contains exactly one extension header followed by one or more
+        extension objects.</t>
+      </section>
 
-	 <t>ICMP Extension Structure: As defined in <xref target="RFC4884"/>, it contains exactly one extension header followed by one or more extension objects.</t>
+      <section title="ICMP Extension Header">
+        <t>The ICMP extension header <xref target="RFC4884"/> is presented
+        below for sake of clarity.</t>
 
-     </section>
-
-	 <section title="ICMP Extension Header">
-
-	 <t>The ICMP extension header <xref target="RFC4884"/> is presented below for sake of clarity.</t>
-
-          <figure align="center" anchor="IcmpExtHdr"
-       title="ICMP Extension Header Format [RFC4884]">
-            <artwork align="left"><![CDATA[
+        <figure align="center" anchor="IcmpExtHdr"
+                title="ICMP Extension Header Format [RFC4884]">
+          <artwork align="left"><![CDATA[
          
        0                   1                   2                   3
        0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1
@@ -527,27 +531,28 @@ Obj  | +----------------------------+   +----------------------------+
       |Version|      (Reserved)       |           Checksum            |
       +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
   ]]></artwork>
-          </figure>
+        </figure>
 
-	 <t>ICMP extension header Fields:</t>
+        <t>ICMP extension header Fields:</t>
 
-	 <t>Version: as defined in <xref target="RFC4884"/>. The value is 2.</t>
+        <t>Version: as defined in <xref target="RFC4884"/>. The value is
+        2.</t>
 
-	 <t>Reserved: as defined in <xref target="RFC4884"/>. The value is 0.</t>
+        <t>Reserved: as defined in <xref target="RFC4884"/>. The value is
+        0.</t>
 
-	 <t>Checksum: as defined in <xref target="RFC4884"/>.</t>
+        <t>Checksum: as defined in <xref target="RFC4884"/>.</t>
+      </section>
 
-     </section>
-
-	 <section title="ICMP Extension Objects">
-	 <section title="Object Format">
-	   <t>Each extension object contains one or more 32-bit words, including an 
-	   object header and payload.  All object headers share a common format.  
-	   <xref target="ObjHdr"/> depicts the object header and payload.</t>
-
+      <section title="ICMP Extension Objects">
+        <section title="Object Format">
+          <t>Each extension object contains one or more 32-bit words,
+          including an object header and payload. All object headers share a
+          common format. <xref target="ObjHdr"/> depicts the object header and
+          payload.</t>
 
           <figure align="center" anchor="ObjHdr"
-       title="Object Header and Payload Format [RFC4884]">
+                  title="Object Header and Payload Format [RFC4884]">
             <artwork align="left"><![CDATA[
          
   0                   1                   2                   3
@@ -561,201 +566,225 @@ Obj  | +----------------------------+   +----------------------------+
   ]]></artwork>
           </figure>
 
-      
-	  <t>AS defined in <xref target="RFC4884"/>, an object header has the following fields:</t>
+          <t>AS defined in <xref target="RFC4884"/>, an object header has the
+          following fields:</t>
 
-	  <t>Length: 16 bits, length of the object, measured in octets, including the object header.</t>
+          <t>Length: 16 bits, length of the object, measured in octets,
+          including the object header.</t>
 
-	  <t>Class-Num: 8 bits, and its values in the context of this document are specified in <xref target="IANA"/>.</t>
+          <t>Class-Num: 8 bits, and its values in the context of this document
+          are specified in <xref target="IANA"/>.</t>
 
-	  <t>C-Type: 8 bits, and its values in the context of this document are specified in <xref target="IANA"/>.</t>
+          <t>C-Type: 8 bits, and its values in the context of this document
+          are specified in <xref target="IANA"/>.</t>
 
-	  <t>Object payload: n*32 bits, where n>0 is an integer.</t>
-	  
-	  <t>The semantics of the object payload field are specific to each of 
-	  the object classes and sub-types that are defined in this document,
-	  as specified below.</t>
-     </section>
+          <t>Object payload: n*32 bits, where n&gt;0 is an integer.</t>
 
-	 <section anchor="RefObjSec" title="Reflection Objects">
+          <t>The semantics of the object payload field are specific to each of
+          the object classes and sub-types that are defined in this document,
+          as specified below.</t>
+        </section>
 
-	 <section title="Reflection Object Specification">
-	 
-	  <t>This document defines the following extension object classes (each class has a Class-Num value assignment in <xref target="IANA"/>):</t>
+        <section anchor="RefObjSec" title="Reflection Objects">
+          <section title="Reflection Object Specification">
+            <t>This document defines the following extension object classes
+            (each class has a Class-Num value assignment in <xref
+            target="IANA"/>):</t>
 
-      <t><list style="symbols">
-         <t>Reflect All.</t>
-         <t>Reflect IPv6 Header.</t>
-         <t>Reflect HBH Header.</t>
-         <t>Reflect Destination Header.</t>
-         <t>Reflect Routing Header.</t>
-         <t>Reflect Payload.</t>
-       </list> </t>	  
+            <t><list style="symbols">
+                <t>Reflect All.</t>
 
-	  <t>These objects are collectively referred to as Reflection objects.
-	  </t>
+                <t>Reflect IPv6 Header.</t>
 
-	  <t>Each of the objects above is assigned a different object 
-	  class value (see <xref target="IANA"/>). Each object has
-	  two C-Type values (sub-types), 'Request' and 'Reply'. 
-	  Each object class explicitly specifies what information
-	  is expected to be included in the corresponding object of the reply.</t>
+                <t>Reflect HBH Header.</t>
 
-	  <t>An Extended Echo Request MAY include one or more Reflection object.
-	  In every Reflection object in the Extended Echo Request the C-Type field
-	  MUST be set to the 'Request' value. If the Reflect All object is present,
-	  it MUST be the first object.</t>
-	  
-	  <t>An implementation that supports ICMPv6 Reflection according to this document
-	  MUST support the Reflect All object, and MAY support other Reflection object
-	  types.</t>
+                <t>Reflect Destination Header.</t>
 
-	  <t>A node that receives an Extended Echo Request with one or more Reflection
-	  object:</t>
-      <t><list style="symbols">
-         <t>Copies each of the received Reflection objects to the Extended Echo Reply in the order they were received.
-		 The rationale is to maintain the symmetry between the request and reply.</t>
-         <t>If the responder is unable to process an object it does not
-		 modify it. This includes, for example, an extension object that is not
-		 supported by the current node.
-		 The C-Type remains with the 'Request' value, indicating
-		 to the sender that the object was not processed.</t>
-         <t>If the responder is able to process the object,
-		 it assigns the 'Reply' value to the C-Type field, and updates the
-		 object payload field accordingly. The specific update for each object class
-		 is described below.</t>
-       </list> </t>	  
-     </section>
-	 
-	 <section title="Reflect All Object">
-	  <t>The Reflect All object is used for reflecting the entire Extended 
-	  Echo Request message in the Reply message.</t>
-	  
-	  <t>The object payload field in the Request consists of arbitrary data. Similar to 
-	  the data field in ICMP Echo messages, the data in the object payload
-	  field of the Reflect All object is reflected to the sender, subject to the truncation by
-	  the responder (see below).</t>
-	  
-	  <t>A node that receives an Extended Echo Request with the Reflect All 
-	  object and is able to update this object, overrides the
-	  object payload field with as much of the corresponding IPv6 
-	  Extended Echo Request packet as possible, including the IPv6 header and 
-	  IPv6 extension headers if they are present. The responder
-	  truncates the corresponding packet in order to fit it into the object payload field.</t>
-     </section>
+                <t>Reflect Routing Header.</t>
 
-	 <section title="Reflect IPv6 Header Object">
-	  <t>The Reflect IPv6 Header object is used for reflecting the IPv6 header
-	  of the Extended Echo Request message in the reply message.</t>
-	  
-	  <t>The object payload field in the request MUST be zero.</t>
+                <t>Reflect Payload.</t>
+              </list></t>
 
-	  <t>A node that receives an Extended Echo Request with the Reflect IPv6 Header 
-	  object and is able to update this object, overrides the
- 	  object payload field with as much of the IPv6 header of the correspnding 
-	  Extended Echo Request packet, excluding IPv6 extension headers if they are present. 
-	  If necessary, the responder
-	  truncates the IPv6 header of the corresponding packet in order to fit it 
-	  into the object payload field.</t> 
-     </section>
+            <t>These objects are collectively referred to as Reflection
+            objects.</t>
 
-	 <section title="IPv6 Extension Header Reflection Objects">
-	  <t>The following objects have been defined for reflecting IPv6 
-	  extension headers:</t>
+            <t>Each of the objects above is assigned a different object class
+            value (see <xref target="IANA"/>). Each object has two C-Type
+            values (sub-types), 'Request' and 'Reply'. Each object class
+            explicitly specifies what information is expected to be included
+            in the corresponding object of the reply.</t>
 
-      <t><list style="symbols">
-         <t>Reflect HBH Header.</t>
-         <t>Reflect Destination Header.</t>
-         <t>Reflect Routing Header.</t>
-       </list> </t>	  
+            <t>An Extended Echo Request MAY include one or more Reflection
+            object. In every Reflection object in the Extended Echo Request
+            the C-Type field MUST be set to the 'Request' value. If the
+            Reflect All object is present, it MUST be the first object.</t>
 
-	  <t>These objects are collectively referred to as extension header objects.</t>
+            <t>An implementation that supports ICMPv6 Reflection according to
+            this document MUST support the Reflect All object, and MAY support
+            other Reflection object types.</t>
 
-	  <t>Each of these objects is used for reflecting the respective IPv6 extension header (if present)
-	  of the Extended Echo Request message.</t>
-	  
-	  <t>The object payload field in the request MUST be zero.</t>
+            <t>A node that receives an Extended Echo Request with one or more
+            Reflection object:</t>
 
-	  <t>A node that receives an Extended Echo Request with one or more extension header objects, updates each of the extension header objects that it is able to process by overriding the
-	  object payload field with as much of the respetive IPv6 extension header, if present, of the corresponding 
-	  Extended Echo Request packet. 
-	  If the request packet does not include the respective extension header, the responder updates the value of the C-Type but does not modify the object payload field.
-	  If necessary, the responder
-	  truncates the extension header of the corresponding packet in order to fit it 
-	  into the object payload field.</t> 
+            <t><list style="symbols">
+                <t>Copies each of the received Reflection objects to the
+                Extended Echo Reply in the order they were received. The
+                rationale is to maintain the symmetry between the request and
+                reply.</t>
 
-     </section>
+                <t>If the responder is unable to process an object it does not
+                modify it. This includes, for example, an extension object
+                that is not supported by the current node. The C-Type remains
+                with the 'Request' value, indicating to the sender that the
+                object was not processed.</t>
 
-	 <section title="Reflect Payload">
-	  <t>The Reflect Payload object is used for reflecting arbitrary data,
-	  similar to the data in ICMP Echo.</t>
-	  
-	  <t>The object payload field consists of arbitrary data.</t>
-	  
-	  <t>A node that receives an Extended Echo Request with the Reflect Payload 
-	  object leaves the object payload field unmodified in the reply message.</t> 
-     </section>
-	 
-     </section>
+                <t>If the responder is able to process the object, it assigns
+                the 'Reply' value to the C-Type field, and updates the object
+                payload field accordingly. The specific update for each object
+                class is described below.</t>
+              </list></t>
+          </section>
 
+          <section title="Reflect All Object">
+            <t>The Reflect All object is used for reflecting the entire
+            Extended Echo Request message in the Reply message.</t>
+
+            <t>The object payload field in the Request consists of arbitrary
+            data. Similar to the data field in ICMP Echo messages, the data in
+            the object payload field of the Reflect All object is reflected to
+            the sender, subject to the truncation by the responder (see
+            below).</t>
+
+            <t>A node that receives an Extended Echo Request with the Reflect
+            All object and is able to update this object, overrides the object
+            payload field with as much of the corresponding IPv6 Extended Echo
+            Request packet as possible, including the IPv6 header and IPv6
+            extension headers if they are present. The responder truncates the
+            corresponding packet in order to fit it into the object payload
+            field.</t>
+          </section>
+
+          <section title="Reflect IPv6 Header Object">
+            <t>The Reflect IPv6 Header object is used for reflecting the IPv6
+            header of the Extended Echo Request message in the reply
+            message.</t>
+
+            <t>The object payload field in the request MUST be zero.</t>
+
+            <t>A node that receives an Extended Echo Request with the Reflect
+            IPv6 Header object and is able to update this object, overrides
+            the object payload field with as much of the IPv6 header of the
+            correspnding Extended Echo Request packet, excluding IPv6
+            extension headers if they are present. If necessary, the responder
+            truncates the IPv6 header of the corresponding packet in order to
+            fit it into the object payload field.</t>
+          </section>
+
+          <section title="IPv6 Extension Header Reflection Objects">
+            <t>The following objects have been defined for reflecting IPv6
+            extension headers:</t>
+
+            <t><list style="symbols">
+                <t>Reflect HBH Header.</t>
+
+                <t>Reflect Destination Header.</t>
+
+                <t>Reflect Routing Header.</t>
+              </list></t>
+
+            <t>These objects are collectively referred to as extension header
+            objects.</t>
+
+            <t>Each of these objects is used for reflecting the respective
+            IPv6 extension header (if present) of the Extended Echo Request
+            message.</t>
+
+            <t>The object payload field in the request MUST be zero.</t>
+
+            <t>A node that receives an Extended Echo Request with one or more
+            extension header objects, updates each of the extension header
+            objects that it is able to process by overriding the object
+            payload field with as much of the respetive IPv6 extension header,
+            if present, of the corresponding Extended Echo Request packet. If
+            the request packet does not include the respective extension
+            header, the responder updates the value of the C-Type but does not
+            modify the object payload field. If necessary, the responder
+            truncates the extension header of the corresponding packet in
+            order to fit it into the object payload field.</t>
+          </section>
+
+          <section title="Reflect Payload">
+            <t>The Reflect Payload object is used for reflecting arbitrary
+            data, similar to the data in ICMP Echo.</t>
+
+            <t>The object payload field consists of arbitrary data.</t>
+
+            <t>A node that receives an Extended Echo Request with the Reflect
+            Payload object leaves the object payload field unmodified in the
+            reply message.</t>
+          </section>
+        </section>
       </section>
 
-	
+      <section anchor="IIOsec" title="Interface Identification Object">
+        <section title="Reflection: Interface Identification Object">
+          <t>When the Extended Echo Request is used for reflection, it MUST
+          NOT include an Interface Identification Object.</t>
+        </section>
 
-	 <section title="Interface Identification Object" anchor="IIOsec">
-	 <section title="Reflection: Interface Identification Object">
-	 <t>When the Extended Echo Request is used for reflection, it 
-	 MUST NOT include an Interface Identification Object.</t>
-     </section>
-	 <section title="Updates to [RFC8335]">
-	  <t>According to <xref target="RFC8335"/> an Extended Echo Request 
-	  message includes exactly one Interface Identification Object in its
-	  Extension Structure. This document updates <xref target="RFC8335"/>
-	  by making this object optional.
-	  </t>
-	  
-	  <t>An Extended Echo Request MAY include an Interface Identification 
-	  Object. If an Extended Echo Request does not include an Interface 
-	  Identification Object:</t>
-	  
-      <t><list style="symbols">
-         <t>The L field in the Extended Echo Request MUST be set to 1.</t>
-         <t>The State field in the Extended Echo Reply MUST be set to 0.</t>
-         <t>The A field in the Extended Echo Reply MUST be set to 1.</t>
-       </list> </t>	  
+        <section title="Updates to [RFC8335]">
+          <t>According to <xref target="RFC8335"/> an Extended Echo Request
+          message includes exactly one Interface Identification Object in its
+          Extension Structure. This document updates <xref target="RFC8335"/>
+          by making this object optional.</t>
 
-      <t>The following sentence from <xref target="RFC8335"/> is removed:</t>
-      <artwork><![CDATA[
+          <t>An Extended Echo Request MAY include an Interface Identification
+          Object. If an Extended Echo Request does not include an Interface
+          Identification Object:</t>
+
+          <t>
+            <list style="symbols">
+              <t>The L field in the Extended Echo Request MUST be set to
+              1.</t>
+
+              <t>The State field in the Extended Echo Reply MUST be set to
+              0.</t>
+
+              <t>The A field in the Extended Echo Reply MUST be set to 1.</t>
+            </list>
+          </t>
+
+          <t>The following sentence from <xref target="RFC8335"/> is
+          removed:</t>
+
+          <artwork><![CDATA[
    When applied to the ICMP Extended Echo Request message, the ICMP 
    Extension Structure MUST contain exactly one instance of the 
    Interface Identification Object (see Section 2.1).
 ]]></artwork>
 
-      <t>The following sentence from <xref target="RFC8335"/>, which specifies
-	  one of the conditions for a Malformed Query, is removed:</t>
-      <artwork><![CDATA[
+          <t>The following sentence from <xref target="RFC8335"/>, which
+          specifies one of the conditions for a Malformed Query, is
+          removed:</t>
+
+          <artwork><![CDATA[
    The ICMP Extension Structure does not include exactly one Interface 
    Identification Object.
 ]]></artwork>
-	  
-	  
-     </section>
-     </section>
-	
+        </section>
+      </section>
     </section>
 
     <section anchor="IANA" title="IANA Considerations">
-        <t>IANA is requested to allocate the following values in the 
-		"ICMP Extension Object Classes and Class Sub-types"
-		registry.</t>
+      <t>IANA is requested to allocate the following values in the "ICMP
+      Extension Object Classes and Class Sub-types" registry.</t>
 
-        <t>The following table presents the requested object class values (denoted
-		by Class-Num in the table) and the requested sub-types for each
-		class (denoted by C-Type in the table).</t>
-		
-          <figure align="center" anchor="IcmpTypes"
-                  title="IANA Allocation">
-            <artwork align="left"><![CDATA[
+      <t>The following table presents the requested object class values
+      (denoted by Class-Num in the table) and the requested sub-types for each
+      class (denoted by C-Type in the table).</t>
+
+      <figure align="center" anchor="IcmpTypes" title="IANA Allocation">
+        <artwork align="left"><![CDATA[
          
   +-----------+------------------+----------+---------------+-----------------+  
   | Class-Num |    Object Name   |  C-Type  |  C-Type Name  |     Reference   |  
@@ -780,75 +809,85 @@ Obj  | +----------------------------+   +----------------------------+
   |           |                  |    1     |  Reply        |                 |
   +-----------+------------------+----------+---------------+-----------------+
   ]]></artwork>
-          </figure>
-
-		
+      </figure>
     </section>
 
     <section anchor="Security" title="Security Considerations">
-      <t>From a security perspective this document does not introduce new 
-	  security threats beyond the threats that are already applicable for 
-	  existing ICMPv6 messages, and are described in <xref target="RFC4443"/>.
-	  </t>
-	  
-	  <t>The Reflection procedure that is defined in this document is symmetric
-	  in terms of the length of the request and reply messages. This symmetry
-	  mitigates the potential for amplification attacks, which would
-	  be possible if the reply message was longer than the request message.</t>
-	  
-	  <t>Depending on the network policy and the location of nodes in the network,
-	  ICMPv6 informational and/or error messages are sometimes filtered or not supported.
-	  For example, some nodes do not reply to ICMPv6 Echo or do not send ICMPv6 Time Exceeded 
-	  messages (used in Traceroute), due to policy considerations that may be related to DoS mitigation or to privacy.
-	  Network operators SHOULD apply similar considerations to ICMPv6 Extended Echo messages when they are used for Reflection. 
-	  For example, an operator can choose to disable support for ICMPv6 Reflection in networks or in nodes that do not respond to ICMPv6 Echo and/or do not generate ICMPv6 Time Exceeded messages, .</t>
-	  
+      <t>From a security perspective this document does not introduce new
+      security threats beyond the threats that are already applicable for
+      existing ICMPv6 messages, and are described in <xref
+      target="RFC4443"/>.</t>
+
+      <t>The Reflection procedure that is defined in this document is
+      symmetric in terms of the length of the request and reply messages. This
+      symmetry mitigates the potential for amplification attacks, which would
+      be possible if the reply message was longer than the request
+      message.</t>
+
+      <t>Depending on the network policy and the location of nodes in the
+      network, ICMPv6 informational and/or error messages are sometimes
+      filtered or not supported. For example, some nodes do not reply to
+      ICMPv6 Echo or do not send ICMPv6 Time Exceeded messages (used in
+      Traceroute), due to policy considerations that may be related to DoS
+      mitigation or to privacy. Network operators SHOULD apply similar
+      considerations to ICMPv6 Extended Echo messages when they are used for
+      Reflection. For example, an operator can choose to disable support for
+      ICMPv6 Reflection in networks or in nodes that do not respond to ICMPv6
+      Echo and/or do not generate ICMPv6 Time Exceeded messages, .</t>
     </section>
   </middle>
 
   <back>
     <references title="Normative References">
       <?rfc include='reference.RFC.2119'?>
-      <?rfc include='reference.RFC.8174'?>
-      <?rfc include='reference.RFC.8200'?>
-      <?rfc include='reference.RFC.4443'?>
-      <?rfc include='reference.RFC.8335'?>
-      <?rfc include='reference.RFC.4884'?>
-      <?rfc include='reference.RFC.9197'?>
-      <?rfc include='reference.RFC.9486'?>
 
+      <?rfc include='reference.RFC.8174'?>
+
+      <?rfc include='reference.RFC.8200'?>
+
+      <?rfc include='reference.RFC.4443'?>
+
+      <?rfc include='reference.RFC.8335'?>
+
+      <?rfc include='reference.RFC.4884'?>
+
+      <?rfc include='reference.RFC.9197'?>
+
+      <?rfc include='reference.RFC.9486'?>
     </references>
 
     <references title="Informative References">
       <?rfc include='reference.I-D.ietf-ippm-ioam-ipv6-options'?>
-      <?rfc include='reference.I-D.filsfils-ippm-path-tracing'?>
-      <?rfc include='reference.I-D.ali-spring-ioam-srv6'?>
-      <?rfc include='reference.I-D.kumar-ippm-ifa'?>
-      <?rfc include='reference.I-D.mcb-6man-icmpv6-loopback'?>
-      <?rfc include='reference.I-D.he-6man-icmpv6-extensions-ipv6-ext-header'?>
 
+      <?rfc include='reference.I-D.filsfils-ippm-path-tracing'?>
+
+      <?rfc include='reference.I-D.ali-spring-ioam-srv6'?>
+
+      <?rfc include='reference.I-D.kumar-ippm-ifa'?>
+
+      <?rfc include='reference.I-D.mcb-6man-icmpv6-loopback'?>
+
+      <?rfc include='reference.I-D.he-6man-icmpv6-extensions-ipv6-ext-header'?>
     </references>
 
     <section anchor="appendix" title="Notes and Discussion">
-      <t>This document is based on two Internet drafts that were merged,
-	  <xref target="I-D.mcb-6man-icmpv6-loopback"/> and
-	  <xref target="I-D.he-6man-icmpv6-extensions-ipv6-ext-header"/>.</t>
+      <t>This document is based on two Internet drafts that were merged, <xref
+      target="I-D.mcb-6man-icmpv6-loopback"/> and <xref
+      target="I-D.he-6man-icmpv6-extensions-ipv6-ext-header"/>.</t>
 
       <t>One of the issues that was discussed in the development of this
-	  document is whether ICMPv6 Echo messages can be reused by using new
-	  code values. Notably, the behavior of ICMPv6 as defined in  
-	  <xref target="RFC4443"/> is well defined when receiving an unknown
-	  type, but the behavior when receiving an unknown code in an Echo
-	  message has not been defined. Therefore, this behavior varies between
-	  different implementations. For example, in Debian distributions 
-	  an Echo Reply is sent with the same code that was received in the
-	  Echo Request, regardless of whether the code value is known. In 
-	  FreeBSD, on the other hand, if an Echo Request is received with an
-	  unknown code it is ignored. Due to this ambiguity in 
-	  <xref target="RFC4443"/> it is not possible to use Echo messages
-	  with a new code value, since existing implementations may behave in
-	  an unpredictable manner.</t>
+      document is whether ICMPv6 Echo messages can be reused by using new code
+      values. Notably, the behavior of ICMPv6 as defined in <xref
+      target="RFC4443"/> is well defined when receiving an unknown type, but
+      the behavior when receiving an unknown code in an Echo message has not
+      been defined. Therefore, this behavior varies between different
+      implementations. For example, in Debian distributions an Echo Reply is
+      sent with the same code that was received in the Echo Request,
+      regardless of whether the code value is known. In FreeBSD, on the other
+      hand, if an Echo Request is received with an unknown code it is ignored.
+      Due to this ambiguity in <xref target="RFC4443"/> it is not possible to
+      use Echo messages with a new code value, since existing implementations
+      may behave in an unpredictable manner.</t>
     </section>
-
   </back>
 </rfc>
