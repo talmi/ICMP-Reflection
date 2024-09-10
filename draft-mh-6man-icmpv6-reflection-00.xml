@@ -104,24 +104,6 @@
       </address>
     </author>
 
-    <author fullname="Reuven Cohen" initials="R." surname="Cohen">
-      <organization abbrev="">Huawei</organization>
-
-      <address>
-        <postal>
-          <street>8-2 Matam</street>
-
-          <city>Haifa</city>
-
-          <code>3190501</code>
-
-          <country>Israel</country>
-        </postal>
-
-        <email>reuven.cohen@huawei.com</email>
-      </address>
-    </author>
-
     <author fullname="Zhenqiang Li" initials="Z." surname="Li">
       <organization>China Mobile</organization>
 
