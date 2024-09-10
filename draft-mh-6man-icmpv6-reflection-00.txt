@@ -6,7 +6,7 @@
 Internet-Draft                                                    Huawei
 Updates: 8335 (if approved)                                        X. He
 Intended status: Standards Track                           China Telecom
-Expires: 12 March 2025                                           T. Zhou
+Expires: 14 March 2025                                           T. Zhou
                                                                   Huawei
                                                                R. Bonica
                                                         Juniper Networks
@@ -16,13 +16,11 @@ Expires: 12 March 2025                                           T. Zhou
                                                                ZTE Corp.
                                                                   C. Xie
                                                            China Telecom
-                                                                R. Cohen
-                                                                  Huawei
                                                                    Z. Li
                                                             China Mobile
                                                                J. Iurman
                                                                   ULiege
-                                                        8 September 2024
+                                                       10 September 2024
 
 
          Internet Control Message Protocol (ICMPv6) Reflection
@@ -53,7 +51,9 @@ Status of This Memo
 
 
 
-Mizrahi, et al.           Expires 12 March 2025                 [Page 1]
+
+
+Mizrahi, et al.           Expires 14 March 2025                 [Page 1]
 
 Internet-Draft              ICMPv6 Reflection             September 2024
 
@@ -63,7 +63,7 @@ Internet-Draft              ICMPv6 Reflection             September 2024
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on 12 March 2025.
+   This Internet-Draft will expire on 14 March 2025.
 
 Copyright Notice
 
@@ -109,7 +109,7 @@ Table of Contents
 
 
 
-Mizrahi, et al.           Expires 12 March 2025                 [Page 2]
+Mizrahi, et al.           Expires 14 March 2025                 [Page 2]
 
 Internet-Draft              ICMPv6 Reflection             September 2024
 
@@ -165,7 +165,7 @@ Internet-Draft              ICMPv6 Reflection             September 2024
 
 
 
-Mizrahi, et al.           Expires 12 March 2025                 [Page 3]
+Mizrahi, et al.           Expires 14 March 2025                 [Page 3]
 
 Internet-Draft              ICMPv6 Reflection             September 2024
 
@@ -221,7 +221,7 @@ Internet-Draft              ICMPv6 Reflection             September 2024
 
 
 
-Mizrahi, et al.           Expires 12 March 2025                 [Page 4]
+Mizrahi, et al.           Expires 14 March 2025                 [Page 4]
 
 Internet-Draft              ICMPv6 Reflection             September 2024
 
@@ -277,7 +277,7 @@ Internet-Draft              ICMPv6 Reflection             September 2024
 
 
 
-Mizrahi, et al.           Expires 12 March 2025                 [Page 5]
+Mizrahi, et al.           Expires 14 March 2025                 [Page 5]
 
 Internet-Draft              ICMPv6 Reflection             September 2024
 
@@ -333,7 +333,7 @@ Internet-Draft              ICMPv6 Reflection             September 2024
 
 
 
-Mizrahi, et al.           Expires 12 March 2025                 [Page 6]
+Mizrahi, et al.           Expires 14 March 2025                 [Page 6]
 
 Internet-Draft              ICMPv6 Reflection             September 2024
 
@@ -389,7 +389,7 @@ Internet-Draft              ICMPv6 Reflection             September 2024
 
 
 
-Mizrahi, et al.           Expires 12 March 2025                 [Page 7]
+Mizrahi, et al.           Expires 14 March 2025                 [Page 7]
 
 Internet-Draft              ICMPv6 Reflection             September 2024
 
@@ -445,7 +445,7 @@ Internet-Draft              ICMPv6 Reflection             September 2024
 
 
 
-Mizrahi, et al.           Expires 12 March 2025                 [Page 8]
+Mizrahi, et al.           Expires 14 March 2025                 [Page 8]
 
 Internet-Draft              ICMPv6 Reflection             September 2024
 
@@ -501,7 +501,7 @@ Internet-Draft              ICMPv6 Reflection             September 2024
 
 
 
-Mizrahi, et al.           Expires 12 March 2025                 [Page 9]
+Mizrahi, et al.           Expires 14 March 2025                 [Page 9]
 
 Internet-Draft              ICMPv6 Reflection             September 2024
 
@@ -557,7 +557,7 @@ Internet-Draft              ICMPv6 Reflection             September 2024
 
 
 
-Mizrahi, et al.           Expires 12 March 2025                [Page 10]
+Mizrahi, et al.           Expires 14 March 2025                [Page 10]
 
 Internet-Draft              ICMPv6 Reflection             September 2024
 
@@ -613,7 +613,7 @@ Internet-Draft              ICMPv6 Reflection             September 2024
 
 
 
-Mizrahi, et al.           Expires 12 March 2025                [Page 11]
+Mizrahi, et al.           Expires 14 March 2025                [Page 11]
 
 Internet-Draft              ICMPv6 Reflection             September 2024
 
@@ -669,7 +669,7 @@ Authors' Addresses
 
 
 
-Mizrahi, et al.           Expires 12 March 2025                [Page 12]
+Mizrahi, et al.           Expires 14 March 2025                [Page 12]
 
 Internet-Draft              ICMPv6 Reflection             September 2024
 
@@ -720,26 +720,16 @@ Internet-Draft              ICMPv6 Reflection             September 2024
    Email: xiechf@chinatelecom.cn
 
 
+   Zhenqiang Li
+   China Mobile
 
 
 
-
-
-Mizrahi, et al.           Expires 12 March 2025                [Page 13]
+Mizrahi, et al.           Expires 14 March 2025                [Page 13]
 
 Internet-Draft              ICMPv6 Reflection             September 2024
 
 
-   Reuven Cohen
-   Huawei
-   8-2 Matam
-   Haifa 3190501
-   Israel
-   Email: reuven.cohen@huawei.com
-
-
-   Zhenqiang Li
-   China Mobile
    Email: li_zhenqiang@hotmail.com
 
 
@@ -781,4 +771,14 @@ Internet-Draft              ICMPv6 Reflection             September 2024
 
 
 
-Mizrahi, et al.           Expires 12 March 2025                [Page 14]
+
+
+
+
+
+
+
+
+
+
+Mizrahi, et al.           Expires 14 March 2025                [Page 14]
