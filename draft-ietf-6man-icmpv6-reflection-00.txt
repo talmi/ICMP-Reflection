@@ -16,7 +16,7 @@ Expires: 11 July 2025                                            T. Zhou
 
 
          Internet Control Message Protocol (ICMPv6) Reflection
-                  draft-ietf-6man-icmpv6-reflection-01
+                  draft-ietf-6man-icmpv6-reflection-00
 
 Abstract
 
