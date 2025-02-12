@@ -518,6 +518,11 @@ ects | |       Arbitrary data       |   |  Request's Arbitrary data  |
       Reflection. For example, an operator can choose to disable support for
       ICMPv6 Reflection in networks or in nodes that do not respond to ICMPv6
       Echo and/or do not generate ICMPv6 Time Exceeded messages.</t>
+
+      <t>As specified in <xref target="RFC8335"/>, in order to protect local 
+      resources, implementations SHOULD rate-limit incoming ICMP Extended Echo 
+      Request messages. Moreover, as per <xref target="RFC8335"/>, by default, 
+      ICMP Extend Echo functionality is disabled.</t>
     </section>
   
   </middle>
