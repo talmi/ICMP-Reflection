@@ -8,7 +8,7 @@
 <?rfc sortrefs="yes" ?>
 <?rfc compact="yes" ?>
 <?rfc subcompact="no" ?>
-<rfc category="std" docName="draft-ietf-6man-icmpv6-reflection-01"
+<rfc category="std" docName="draft-ietf-6man-icmpv6-reflection-02"
      ipr="trust200902" updates="8335">
   <front>
     <title abbrev="ICMPv6 Reflection">Internet Control Message Protocol
