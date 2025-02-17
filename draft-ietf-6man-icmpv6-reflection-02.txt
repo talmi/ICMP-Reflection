@@ -6,13 +6,13 @@
 Internet-Draft                                                    Huawei
 Updates: 8335 (if approved)                                        X. He
 Intended status: Standards Track                           China Telecom
-Expires: 28 July 2025                                            T. Zhou
+Expires: 21 August 2025                                          T. Zhou
                                                                   Huawei
                                                                R. Bonica
                                                         Juniper Networks
                                                                   X. Min
                                                                ZTE Corp.
-                                                         24 January 2025
+                                                        17 February 2025
 
 
          Internet Control Message Protocol (ICMPv6) Reflection
@@ -53,12 +53,12 @@ Status of This Memo
 
 
 
-Mizrahi, et al.           Expires 28 July 2025                  [Page 1]
+Mizrahi, et al.          Expires 21 August 2025                 [Page 1]
 
-Internet-Draft              ICMPv6 Reflection               January 2025
+Internet-Draft              ICMPv6 Reflection              February 2025
 
 
-   This Internet-Draft will expire on 28 July 2025.
+   This Internet-Draft will expire on 21 August 2025.
 
 Copyright Notice
 
@@ -97,7 +97,7 @@ Table of Contents
    9.  References  . . . . . . . . . . . . . . . . . . . . . . . . .  11
      9.1.  Normative References  . . . . . . . . . . . . . . . . . .  11
      9.2.  Informative References  . . . . . . . . . . . . . . . . .  12
-   Contributors  . . . . . . . . . . . . . . . . . . . . . . . . . .  12
+   Contributors  . . . . . . . . . . . . . . . . . . . . . . . . . .  13
    Authors' Addresses  . . . . . . . . . . . . . . . . . . . . . . .  13
 
 1.  Introduction
@@ -109,9 +109,9 @@ Table of Contents
 
 
 
-Mizrahi, et al.           Expires 28 July 2025                  [Page 2]
+Mizrahi, et al.          Expires 21 August 2025                 [Page 2]
 
-Internet-Draft              ICMPv6 Reflection               January 2025
+Internet-Draft              ICMPv6 Reflection              February 2025
 
 
    *  A probing node sends an ICMPv6 [RFC4443] message to a probed node.
@@ -165,9 +165,9 @@ Internet-Draft              ICMPv6 Reflection               January 2025
 
 
 
-Mizrahi, et al.           Expires 28 July 2025                  [Page 3]
+Mizrahi, et al.          Expires 21 August 2025                 [Page 3]
 
-Internet-Draft              ICMPv6 Reflection               January 2025
+Internet-Draft              ICMPv6 Reflection              February 2025
 
 
    MTU:       Maximum Transmission Unit
@@ -221,9 +221,9 @@ Internet-Draft              ICMPv6 Reflection               January 2025
 
 
 
-Mizrahi, et al.           Expires 28 July 2025                  [Page 4]
+Mizrahi, et al.          Expires 21 August 2025                 [Page 4]
 
-Internet-Draft              ICMPv6 Reflection               January 2025
+Internet-Draft              ICMPv6 Reflection              February 2025
 
 
    The ICMPv6 Extended Echo Reply message contains an ICMP Extension
@@ -277,9 +277,9 @@ Internet-Draft              ICMPv6 Reflection               January 2025
 
 
 
-Mizrahi, et al.           Expires 28 July 2025                  [Page 5]
+Mizrahi, et al.          Expires 21 August 2025                 [Page 5]
 
-Internet-Draft              ICMPv6 Reflection               January 2025
+Internet-Draft              ICMPv6 Reflection              February 2025
 
 
          +----------------------------+   +----------------------------+
@@ -333,9 +333,9 @@ Internet-Draft              ICMPv6 Reflection               January 2025
 
 
 
-Mizrahi, et al.           Expires 28 July 2025                  [Page 6]
+Mizrahi, et al.          Expires 21 August 2025                 [Page 6]
 
-Internet-Draft              ICMPv6 Reflection               January 2025
+Internet-Draft              ICMPv6 Reflection              February 2025
 
 
    *  Reflect Arbitrary Data
@@ -389,9 +389,9 @@ Internet-Draft              ICMPv6 Reflection               January 2025
 
 
 
-Mizrahi, et al.           Expires 28 July 2025                  [Page 7]
+Mizrahi, et al.          Expires 21 August 2025                 [Page 7]
 
-Internet-Draft              ICMPv6 Reflection               January 2025
+Internet-Draft              ICMPv6 Reflection              February 2025
 
 
 5.2.  Reflect All Object
@@ -445,9 +445,9 @@ Internet-Draft              ICMPv6 Reflection               January 2025
 
 
 
-Mizrahi, et al.           Expires 28 July 2025                  [Page 8]
+Mizrahi, et al.          Expires 21 August 2025                 [Page 8]
 
-Internet-Draft              ICMPv6 Reflection               January 2025
+Internet-Draft              ICMPv6 Reflection              February 2025
 
 
    In the ICMPv6 Extended Echo Request message, the payload field MUST
@@ -501,9 +501,9 @@ Internet-Draft              ICMPv6 Reflection               January 2025
 
 
 
-Mizrahi, et al.           Expires 28 July 2025                  [Page 9]
+Mizrahi, et al.          Expires 21 August 2025                 [Page 9]
 
-Internet-Draft              ICMPv6 Reflection               January 2025
+Internet-Draft              ICMPv6 Reflection              February 2025
 
 
 +-----------+------------------+--------+---------------+-----------------+
@@ -557,9 +557,9 @@ Internet-Draft              ICMPv6 Reflection               January 2025
 
 
 
-Mizrahi, et al.           Expires 28 July 2025                 [Page 10]
+Mizrahi, et al.          Expires 21 August 2025                [Page 10]
 
-Internet-Draft              ICMPv6 Reflection               January 2025
+Internet-Draft              ICMPv6 Reflection              February 2025
 
 
    The Reflection procedure that is defined in this document is
@@ -579,6 +579,11 @@ Internet-Draft              ICMPv6 Reflection               January 2025
    support for ICMPv6 Reflection in networks or in nodes that do not
    respond to ICMPv6 Echo and/or do not generate ICMPv6 Time Exceeded
    messages.
+
+   As specified in [RFC8335], in order to protect local resources,
+   implementations SHOULD rate-limit incoming ICMP Extended Echo Request
+   messages.  Moreover, as per [RFC8335], by default, ICMP Extend Echo
+   functionality is disabled.
 
 9.  References
 
@@ -605,18 +610,17 @@ Internet-Draft              ICMPv6 Reflection               January 2025
               DOI 10.17487/RFC4884, April 2007,
               <https://www.rfc-editor.org/info/rfc4884>.
 
+
+
+
+Mizrahi, et al.          Expires 21 August 2025                [Page 11]
+
+Internet-Draft              ICMPv6 Reflection              February 2025
+
+
    [RFC8174]  Leiba, B., "Ambiguity of Uppercase vs Lowercase in RFC
               2119 Key Words", BCP 14, RFC 8174, DOI 10.17487/RFC8174,
               May 2017, <https://www.rfc-editor.org/info/rfc8174>.
-
-
-
-
-
-Mizrahi, et al.           Expires 28 July 2025                 [Page 11]
-
-Internet-Draft              ICMPv6 Reflection               January 2025
-
 
    [RFC8200]  Deering, S. and R. Hinden, "Internet Protocol, Version 6
               (IPv6) Specification", STD 86, RFC 8200,
@@ -661,17 +665,16 @@ Internet-Draft              ICMPv6 Reflection               January 2025
               (IOAM)", RFC 9486, DOI 10.17487/RFC9486, September 2023,
               <https://www.rfc-editor.org/info/rfc9486>.
 
-Contributors
 
 
 
 
-
-
-
-Mizrahi, et al.           Expires 28 July 2025                 [Page 12]
+Mizrahi, et al.          Expires 21 August 2025                [Page 12]
 
-Internet-Draft              ICMPv6 Reflection               January 2025
+Internet-Draft              ICMPv6 Reflection              February 2025
+
+
+Contributors
 
 
       Shahar Belkar
@@ -714,6 +717,19 @@ Authors' Addresses
    Email: hexm4@chinatelecom.cn
 
 
+
+
+
+
+
+
+
+
+Mizrahi, et al.          Expires 21 August 2025                [Page 13]
+
+Internet-Draft              ICMPv6 Reflection              February 2025
+
+
    Tianran Zhou
    Huawei
    156 Beiqing Rd.
@@ -721,13 +737,6 @@ Authors' Addresses
    100095
    China
    Email: zhoutianran@huawei.com
-
-
-
-
-Mizrahi, et al.           Expires 28 July 2025                 [Page 13]
-
-Internet-Draft              ICMPv6 Reflection               January 2025
 
 
    Ron Bonica
@@ -772,13 +781,4 @@ Internet-Draft              ICMPv6 Reflection               January 2025
 
 
 
-
-
-
-
-
-
-
-
-
-Mizrahi, et al.           Expires 28 July 2025                 [Page 14]
+Mizrahi, et al.          Expires 21 August 2025                [Page 14]
