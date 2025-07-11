@@ -9,7 +9,7 @@ Intended status: Standards Track                           China Telecom
 Expires: 10 January 2026                                         T. Zhou
                                                                   Huawei
                                                                R. Bonica
-                                                        Juniper Networks
+                                                                     HPE
                                                                   X. Min
                                                                ZTE Corp.
                                                              9 July 2025
@@ -801,7 +801,7 @@ Internet-Draft              ICMPv6 Reflection                  July 2025
 
 
    Ron Bonica
-   Juniper Networks
+   HPE
    United States of America
    Email: rbonica@juniper.net
 
