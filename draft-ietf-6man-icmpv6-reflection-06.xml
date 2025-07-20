@@ -9,7 +9,7 @@
 <?rfc compact="yes" ?>
 <?rfc subcompact="no" ?>
 <rfc category="std" docName="draft-ietf-6man-icmpv6-reflection-06"
-     ipr="trust200902" updates="8335">
+     ipr="trust200902">
   <front>
     <title abbrev="ICMPv6 Reflection">Internet Control Message Protocol
     (ICMPv6) Reflection</title>
@@ -112,7 +112,7 @@
     <section title="Introduction">
       <t>The ICMPv6 Reflection utility is an IPv6 <xref target="RFC8200"/>
       diagnostic tool. It is similar to Ping  <xref target="RFC2151"/> and
-      the ICMPv6 Probe  <xref target="RFC8335"/> utility in the following respects:</t>
+      the ICMPv6 Probe  <xref target="RFC8335"/>, <xref target="I-D.ietf-intarea-rfc8335bis"/> utility in the following respects:</t>
 
       <t><list style="symbols">
           <t>A probing node sends an ICMPv6 <xref target="RFC4443"/> message
@@ -144,7 +144,7 @@
       request only the IPv6 header and extension headers that encapsulated the request message.</t>
 
       <t>The ICMPv6 Reflection utility uses the ICMPv6 Extended Echo Request and
-      Extended Echo Reply message types <xref target="RFC8335"/>.
+      Extended Echo Reply message types <xref target="I-D.ietf-intarea-rfc8335bis"/>.
       Each of these message types can include an ICMP Extension Structure <xref
       target="RFC4884"/>. The ICMP Extension Structure includes one or more extension objects. 
 	  This document defines several new extension objects that are used to 
@@ -206,8 +206,7 @@
     </section>
 
     <section anchor="TheorySec" title="Theory of Operation">
-      <t>The probing node sends an ICMPv6 Extended Echo Request message <xref
-      target="RFC8335"/> to the probed node. The ICMPv6 Extended Echo Request
+      <t>The probing node sends an ICMPv6 Extended Echo Request message <xref target="I-D.ietf-intarea-rfc8335bis"/> to the probed node. The ICMPv6 Extended Echo Request
       message contains an ICMP Extension Structure <xref target="RFC4884"/> and
       the ICMP Extension Structure contains an Extension Header followed by 
       any combination of the extension objects defined in <xref
@@ -228,7 +227,7 @@
       Address in the request message. Alternatively, 
       the interface can be identified by including an 
       Interface Identification Object in the request 
-      message, as defined in <xref target="RFC8335"/>.</t>
+      message, as defined in <xref target="I-D.ietf-intarea-rfc8335bis"/>.</t>
 
       <t>The ICMPv6 Extended Echo Reply message also contains an ICMP Extension
       Structure. The ICMP Extension
@@ -447,74 +446,6 @@ ects | |       Arbitrary data       |   |  Request's Arbitrary data  |
       </section>
     </section>
 
-    <section title="Updates to [RFC8335]">
-      <t>OLD:</t>
-
-      <artwork><![CDATA[
-   When applied to the ICMP Extended Echo Request message, the ICMP 
-   Extension Structure MUST contain exactly one instance of the 
-   Interface Identification Object (see Section 2.1).
-]]></artwork>
-
-      <t>NEW:</t>
-
-      <artwork><![CDATA[
-   When applied to the ICMP Extended Echo Request message, the ICMP 
-   Extension Structure MUST contain zero or one instances of the 
-   Interface Identification Object (see Section 2.1).
-]]></artwork>
-
-      <t>OLD:</t>
-
-      <artwork><![CDATA[
-   The ICMP Extension Structure does not include exactly one Interface 
-   Identification Object.
-]]></artwork>
-
-      <t>NEW:</t>
-
-      <artwork><![CDATA[
-   The ICMP Extension Structure includes more than one Interface 
-   Identification Object.
-]]></artwork>
-
-      <t>OLD:</t>
-
-      <artwork><![CDATA[
-   The Code field MUST be set to (2) No Such Interface if the L-bit is
-   set and the ICMP Extension Structure does not identify an interface
-   that resides on the proxy node.
-]]></artwork>
-
-      <t>NEW:</t>
-
-      <artwork><![CDATA[
-   The Code field MUST be set to (2) No Such Interface if the L-bit is
-   set, an Interface Identification Object is present and it does not 
-   identify an interface that resides on the proxy node.
-]]></artwork>
-
-      <t>OLD:</t>
-
-      <artwork><![CDATA[
-   The Code field MUST be set to (3) No Such Table Entry if the L-bit is
-   clear and the address found in the Interface Identification Object
-   does not appear in the IPv4 Address Resolution Protocol (ARP) table
-   or the IPv6 Neighbor Cache.
-]]></artwork>
-
-      <t>NEW:</t>
-
-      <artwork><![CDATA[
-   The Code field MUST be set to (3) No Such Table Entry if the L-bit is
-   clear, the Interface Identification Object is present and the address 
-   found in the Interface Identification Object does not appear in the 
-   IPv4 Address Resolution Protocol (ARP) table or the IPv6 Neighbor 
-   Cache.
-]]></artwork>
-
-    </section>
-
     <section anchor="IANA" title="IANA Considerations">
       <t>IANA is requested to allocate the following values in the "ICMP
       Extension Object Classes and Class Sub-types" registry.</t>
@@ -566,7 +497,7 @@ ects | |       Arbitrary data       |   |  Request's Arbitrary data  |
 
     <section anchor="Security" title="Security Considerations">
       <t>Since this document uses technologies from <xref target="RFC4443"/>,
-      <xref target="RFC4884"/>, and <xref target="RFC8335"/>, it inherits
+      <xref target="RFC4884"/>, and <xref target="I-D.ietf-intarea-rfc8335bis"/>, it inherits
       security considerations from those documents.</t>
 
       <t>The Reflection procedure that is defined in this document is
@@ -586,9 +517,9 @@ ects | |       Arbitrary data       |   |  Request's Arbitrary data  |
       ICMPv6 Reflection in networks or in nodes that do not respond to ICMPv6
       Echo and/or do not generate ICMPv6 Time Exceeded messages.</t>
 
-      <t>As specified in <xref target="RFC8335"/>, in order to protect local 
+      <t>As specified in <xref target="I-D.ietf-intarea-rfc8335bis"/>, in order to protect local 
       resources, implementations SHOULD rate-limit incoming ICMP Extended Echo 
-      Request messages. Moreover, as per <xref target="RFC8335"/>, by default, 
+      Request messages. Moreover, as per <xref target="I-D.ietf-intarea-rfc8335bis"/>, by default, 
       ICMP Extend Echo functionality is disabled.</t>
     </section>
   
@@ -613,6 +544,8 @@ ects | |       Arbitrary data       |   |  Request's Arbitrary data  |
 
       <?rfc include='reference.RFC.4884'?>
 
+      <?rfc include='reference.I-D.ietf-intarea-rfc8335bis'?>
+	    
     </references>
 
     <references title="Informative References">
