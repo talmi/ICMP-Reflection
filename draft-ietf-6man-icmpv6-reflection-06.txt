@@ -4,15 +4,15 @@
 
 6MAN                                                          T. Mizrahi
 Internet-Draft                                                    Huawei
-Updates: 8335 (if approved)                                        X. He
-Intended status: Standards Track                           China Telecom
-Expires: 10 January 2026                                         T. Zhou
+Intended status: Standards Track                                   X. He
+Expires: 21 January 2026                                   China Telecom
+                                                                 T. Zhou
                                                                   Huawei
                                                                R. Bonica
                                                                      HPE
                                                                   X. Min
                                                                ZTE Corp.
-                                                             9 July 2025
+                                                            20 July 2025
 
 
          Internet Control Message Protocol (ICMPv6) Reflection
@@ -53,12 +53,12 @@ Status of This Memo
 
 
 
-Mizrahi, et al.          Expires 10 January 2026                [Page 1]
+Mizrahi, et al.          Expires 21 January 2026                [Page 1]
 
 Internet-Draft              ICMPv6 Reflection                  July 2025
 
 
-   This Internet-Draft will expire on 10 January 2026.
+   This Internet-Draft will expire on 21 January 2026.
 
 Copyright Notice
 
@@ -89,33 +89,30 @@ Table of Contents
      5.6.  Reflect Destination Header  . . . . . . . . . . . . . . .   8
      5.7.  Reflect Request . . . . . . . . . . . . . . . . . . . . .   9
      5.8.  Reflect Arbitrary Data  . . . . . . . . . . . . . . . . .   9
-   6.  Updates to [RFC8335]  . . . . . . . . . . . . . . . . . . . .   9
-   7.  IANA Considerations . . . . . . . . . . . . . . . . . . . . .  10
-   8.  Security Considerations . . . . . . . . . . . . . . . . . . .  11
-   9.  Acknowledgements  . . . . . . . . . . . . . . . . . . . . . .  12
-   10. References  . . . . . . . . . . . . . . . . . . . . . . . . .  12
-     10.1.  Normative References . . . . . . . . . . . . . . . . . .  12
-     10.2.  Informative References . . . . . . . . . . . . . . . . .  13
-   Contributors  . . . . . . . . . . . . . . . . . . . . . . . . . .  14
+   6.  IANA Considerations . . . . . . . . . . . . . . . . . . . . .   9
+   7.  Security Considerations . . . . . . . . . . . . . . . . . . .  10
+   8.  Acknowledgements  . . . . . . . . . . . . . . . . . . . . . .  11
+   9.  References  . . . . . . . . . . . . . . . . . . . . . . . . .  11
+     9.1.  Normative References  . . . . . . . . . . . . . . . . . .  11
+     9.2.  Informative References  . . . . . . . . . . . . . . . . .  12
+   Contributors  . . . . . . . . . . . . . . . . . . . . . . . . . .  13
    Authors' Addresses  . . . . . . . . . . . . . . . . . . . . . . .  14
 
 1.  Introduction
 
    The ICMPv6 Reflection utility is an IPv6 [RFC8200] diagnostic tool.
-   It is similar to Ping [RFC2151] and the ICMPv6 Probe [RFC8335]
-   utility in the following respects:
-
-
-
-
-
-Mizrahi, et al.          Expires 10 January 2026                [Page 2]
-
-Internet-Draft              ICMPv6 Reflection                  July 2025
-
+   It is similar to Ping [RFC2151] and the ICMPv6 Probe [RFC8335],
+   [I-D.ietf-intarea-rfc8335bis] utility in the following respects:
 
    *  A probing node sends an ICMPv6 [RFC4443] message to a probed node.
       This ICMP message requests specific information.
+
+
+
+Mizrahi, et al.          Expires 21 January 2026                [Page 2]
+
+Internet-Draft              ICMPv6 Reflection                  July 2025
+
 
    *  The probed node receives the above-mentioned message, encodes the
       requested information into another ICMPv6 message, and sends that
@@ -139,12 +136,12 @@ Internet-Draft              ICMPv6 Reflection                  July 2025
    that encapsulated the request message.
 
    The ICMPv6 Reflection utility uses the ICMPv6 Extended Echo Request
-   and Extended Echo Reply message types [RFC8335].  Each of these
-   message types can include an ICMP Extension Structure [RFC4884].  The
-   ICMP Extension Structure includes one or more extension objects.
-   This document defines several new extension objects that are used to
-   reflect portions of the request message, as it arrived at the probed
-   node.
+   and Extended Echo Reply message types [I-D.ietf-intarea-rfc8335bis].
+   Each of these message types can include an ICMP Extension Structure
+   [RFC4884].  The ICMP Extension Structure includes one or more
+   extension objects.  This document defines several new extension
+   objects that are used to reflect portions of the request message, as
+   it arrived at the probed node.
 
    An alternative approach that could be considered involves the probing
    node sending a UDP packet with an unused destination port to the
@@ -165,7 +162,10 @@ Internet-Draft              ICMPv6 Reflection                  July 2025
 
 
 
-Mizrahi, et al.          Expires 10 January 2026                [Page 3]
+
+
+
+Mizrahi, et al.          Expires 21 January 2026                [Page 3]
 
 Internet-Draft              ICMPv6 Reflection                  July 2025
 
@@ -209,19 +209,19 @@ Internet-Draft              ICMPv6 Reflection                  July 2025
 4.  Theory of Operation
 
    The probing node sends an ICMPv6 Extended Echo Request message
-   [RFC8335] to the probed node.  The ICMPv6 Extended Echo Request
-   message contains an ICMP Extension Structure [RFC4884] and the ICMP
-   Extension Structure contains an Extension Header followed by any
-   combination of the extension objects defined in Section 5 of this
-   document.  These objects are called Reflection objects.  Each
-   Reflection object requests that the probed node reflect a portion of
-   the request message back to the probing node.
+   [I-D.ietf-intarea-rfc8335bis] to the probed node.  The ICMPv6
+   Extended Echo Request message contains an ICMP Extension Structure
+   [RFC4884] and the ICMP Extension Structure contains an Extension
+   Header followed by any combination of the extension objects defined
+   in Section 5 of this document.  These objects are called Reflection
+   objects.  Each Reflection object requests that the probed node
+   reflect a portion of the request message back to the probing node.
 
 
 
 
 
-Mizrahi, et al.          Expires 10 January 2026                [Page 4]
+Mizrahi, et al.          Expires 21 January 2026                [Page 4]
 
 Internet-Draft              ICMPv6 Reflection                  July 2025
 
@@ -237,7 +237,7 @@ Internet-Draft              ICMPv6 Reflection                  July 2025
    the probed node.  That interface is identified by the Destination
    Address in the request message.  Alternatively, the interface can be
    identified by including an Interface Identification Object in the
-   request message, as defined in [RFC8335].
+   request message, as defined in [I-D.ietf-intarea-rfc8335bis].
 
    The ICMPv6 Extended Echo Reply message also contains an ICMP
    Extension Structure.  The ICMP Extension Structure MUST contain all
@@ -277,7 +277,7 @@ Internet-Draft              ICMPv6 Reflection                  July 2025
 
 
 
-Mizrahi, et al.          Expires 10 January 2026                [Page 5]
+Mizrahi, et al.          Expires 21 January 2026                [Page 5]
 
 Internet-Draft              ICMPv6 Reflection                  July 2025
 
@@ -333,7 +333,7 @@ Internet-Draft              ICMPv6 Reflection                  July 2025
 
 
 
-Mizrahi, et al.          Expires 10 January 2026                [Page 6]
+Mizrahi, et al.          Expires 21 January 2026                [Page 6]
 
 Internet-Draft              ICMPv6 Reflection                  July 2025
 
@@ -368,7 +368,7 @@ Internet-Draft              ICMPv6 Reflection                  July 2025
 
    Each Reflection object MUST include the following:
 
-   *  An object class (as specified in Section 7).
+   *  An object class (as specified in Section 6).
 
    *  C-Type as described below.
 
@@ -389,7 +389,7 @@ Internet-Draft              ICMPv6 Reflection                  July 2025
 
 
 
-Mizrahi, et al.          Expires 10 January 2026                [Page 7]
+Mizrahi, et al.          Expires 21 January 2026                [Page 7]
 
 Internet-Draft              ICMPv6 Reflection                  July 2025
 
@@ -445,7 +445,7 @@ Internet-Draft              ICMPv6 Reflection                  July 2025
 
 
 
-Mizrahi, et al.          Expires 10 January 2026                [Page 8]
+Mizrahi, et al.          Expires 21 January 2026                [Page 8]
 
 Internet-Draft              ICMPv6 Reflection                  July 2025
 
@@ -473,65 +473,7 @@ Internet-Draft              ICMPv6 Reflection                  July 2025
    In the ICMPv6 Extended Echo Request message, the object payload field
    contains arbitrary data.
 
-6.  Updates to [RFC8335]
-
-   OLD:
-
-      When applied to the ICMP Extended Echo Request message, the ICMP
-      Extension Structure MUST contain exactly one instance of the
-      Interface Identification Object (see Section 2.1).
-
-   NEW:
-
-      When applied to the ICMP Extended Echo Request message, the ICMP
-      Extension Structure MUST contain zero or one instances of the
-      Interface Identification Object (see Section 2.1).
-
-   OLD:
-
-     The ICMP Extension Structure does not include exactly one Interface
-     Identification Object.
-
-   NEW:
-
-      The ICMP Extension Structure includes more than one Interface
-      Identification Object.
-
-   OLD:
-
-
-
-Mizrahi, et al.          Expires 10 January 2026                [Page 9]
-
-Internet-Draft              ICMPv6 Reflection                  July 2025
-
-
-     The Code field MUST be set to (2) No Such Interface if the L-bit is
-     set and the ICMP Extension Structure does not identify an interface
-     that resides on the proxy node.
-
-   NEW:
-
-     The Code field MUST be set to (2) No Such Interface if the L-bit is
-     set, an Interface Identification Object is present and it does not
-     identify an interface that resides on the proxy node.
-
-   OLD:
-
-   The Code field MUST be set to (3) No Such Table Entry if the L-bit is
-   clear and the address found in the Interface Identification Object
-   does not appear in the IPv4 Address Resolution Protocol (ARP) table
-   or the IPv6 Neighbor Cache.
-
-   NEW:
-
-   The Code field MUST be set to (3) No Such Table Entry if the L-bit is
-   clear, the Interface Identification Object is present and the address
-   found in the Interface Identification Object does not appear in the
-   IPv4 Address Resolution Protocol (ARP) table or the IPv6 Neighbor
-   Cache.
-
-7.  IANA Considerations
+6.  IANA Considerations
 
    IANA is requested to allocate the following values in the "ICMP
    Extension Object Classes and Class Sub-types" registry.
@@ -557,7 +499,9 @@ Internet-Draft              ICMPv6 Reflection                  July 2025
 
 
 
-Mizrahi, et al.          Expires 10 January 2026               [Page 10]
+
+
+Mizrahi, et al.          Expires 21 January 2026                [Page 9]
 
 Internet-Draft              ICMPv6 Reflection                  July 2025
 
@@ -601,10 +545,11 @@ Internet-Draft              ICMPv6 Reflection                  July 2025
 
    *  (3) Reply - Object Length Exceeded
 
-8.  Security Considerations
+7.  Security Considerations
 
    Since this document uses technologies from [RFC4443], [RFC4884], and
-   [RFC8335], it inherits security considerations from those documents.
+   [I-D.ietf-intarea-rfc8335bis], it inherits security considerations
+   from those documents.
 
 
 
@@ -612,8 +557,7 @@ Internet-Draft              ICMPv6 Reflection                  July 2025
 
 
 
-
-Mizrahi, et al.          Expires 10 January 2026               [Page 11]
+Mizrahi, et al.          Expires 21 January 2026               [Page 10]
 
 Internet-Draft              ICMPv6 Reflection                  July 2025
 
@@ -636,24 +580,43 @@ Internet-Draft              ICMPv6 Reflection                  July 2025
    respond to ICMPv6 Echo and/or do not generate ICMPv6 Time Exceeded
    messages.
 
-   As specified in [RFC8335], in order to protect local resources,
-   implementations SHOULD rate-limit incoming ICMP Extended Echo Request
-   messages.  Moreover, as per [RFC8335], by default, ICMP Extend Echo
+   As specified in [I-D.ietf-intarea-rfc8335bis], in order to protect
+   local resources, implementations SHOULD rate-limit incoming ICMP
+   Extended Echo Request messages.  Moreover, as per
+   [I-D.ietf-intarea-rfc8335bis], by default, ICMP Extend Echo
    functionality is disabled.
 
-9.  Acknowledgements
+8.  Acknowledgements
 
    The authors gratefully acknowledge Sebastian Moeller for his
    insightful comments.
 
-10.  References
+9.  References
 
-10.1.  Normative References
+9.1.  Normative References
+
+   [I-D.ietf-intarea-rfc8335bis]
+              Fenner, B., Bonica, R., Thomas, R., Linkova, J., Lenart,
+              C., and M. Boucadair, "PROBE: A Utility for Probing
+              Interfaces", Work in Progress, Internet-Draft, draft-ietf-
+              intarea-rfc8335bis-00, 24 January 2025,
+              <https://datatracker.ietf.org/doc/html/draft-ietf-intarea-
+              rfc8335bis-00>.
 
    [RFC2119]  Bradner, S., "Key words for use in RFCs to Indicate
               Requirement Levels", BCP 14, RFC 2119,
               DOI 10.17487/RFC2119, March 1997,
               <https://www.rfc-editor.org/info/rfc2119>.
+
+
+
+
+
+
+Mizrahi, et al.          Expires 21 January 2026               [Page 11]
+
+Internet-Draft              ICMPv6 Reflection                  July 2025
+
 
    [RFC4443]  Conta, A., Deering, S., and M. Gupta, Ed., "Internet
               Control Message Protocol (ICMPv6) for the Internet
@@ -665,14 +628,6 @@ Internet-Draft              ICMPv6 Reflection                  July 2025
               "Extended ICMP to Support Multi-Part Messages", RFC 4884,
               DOI 10.17487/RFC4884, April 2007,
               <https://www.rfc-editor.org/info/rfc4884>.
-
-
-
-
-Mizrahi, et al.          Expires 10 January 2026               [Page 12]
-
-Internet-Draft              ICMPv6 Reflection                  July 2025
-
 
    [RFC8174]  Leiba, B., "Ambiguity of Uppercase vs Lowercase in RFC
               2119 Key Words", BCP 14, RFC 8174, DOI 10.17487/RFC8174,
@@ -688,7 +643,7 @@ Internet-Draft              ICMPv6 Reflection                  July 2025
               RFC 8335, DOI 10.17487/RFC8335, February 2018,
               <https://www.rfc-editor.org/info/rfc8335>.
 
-10.2.  Informative References
+9.2.  Informative References
 
    [I-D.ali-spring-ioam-srv6]
               Ali, Z., Gandhi, R., Filsfils, C., Brockners, F., Nainar,
@@ -711,6 +666,14 @@ Internet-Draft              ICMPv6 Reflection                  July 2025
               Kumar, J., Anubolu, S., Lemon, J., Manur, R., Holbrook,
               H., Ghanwani, A., Cai, D., Ou, H., Li, Y., and X. Wang,
               "Inband Flow Analyzer", Work in Progress, Internet-Draft,
+
+
+
+Mizrahi, et al.          Expires 21 January 2026               [Page 12]
+
+Internet-Draft              ICMPv6 Reflection                  July 2025
+
+
               draft-kumar-ippm-ifa-08, 26 April 2024,
               <https://datatracker.ietf.org/doc/html/draft-kumar-ippm-
               ifa-08>.
@@ -719,16 +682,6 @@ Internet-Draft              ICMPv6 Reflection                  July 2025
               IP Tools and Utilities", FYI 30, RFC 2151,
               DOI 10.17487/RFC2151, June 1997,
               <https://www.rfc-editor.org/info/rfc2151>.
-
-
-
-
-
-
-Mizrahi, et al.          Expires 10 January 2026               [Page 13]
-
-Internet-Draft              ICMPv6 Reflection                  July 2025
-
 
    [RFC3022]  Srisuresh, P. and K. Egevang, "Traditional IP Network
               Address Translator (Traditional NAT)", RFC 3022,
@@ -768,6 +721,15 @@ Contributors
       Belgium
       Email: justin.iurman@uliege.be
 
+
+
+
+
+Mizrahi, et al.          Expires 21 January 2026               [Page 13]
+
+Internet-Draft              ICMPv6 Reflection                  July 2025
+
+
 Authors' Addresses
 
    Tal Mizrahi
@@ -776,14 +738,6 @@ Authors' Addresses
    Haifa 3190501
    Israel
    Email: tal.mizrahi.phd@gmail.com
-
-
-
-
-
-Mizrahi, et al.          Expires 10 January 2026               [Page 14]
-
-Internet-Draft              ICMPv6 Reflection                  July 2025
 
 
    Xiaoming He
@@ -827,14 +781,4 @@ Internet-Draft              ICMPv6 Reflection                  July 2025
 
 
 
-
-
-
-
-
-
-
-
-
-
-Mizrahi, et al.          Expires 10 January 2026               [Page 15]
+Mizrahi, et al.          Expires 21 January 2026               [Page 14]
