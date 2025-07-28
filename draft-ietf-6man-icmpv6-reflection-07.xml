@@ -303,7 +303,7 @@
       MUST include the following fields:</t>
 
       <t><list style="symbols">
-          <t>The length of the 'Reflect All' object.</t>
+          <t>The Length of the 'Reflect All' object.</t>
 
           <t>An object class (as specified in <xref target="IANA"/>).</t>
 
@@ -311,6 +311,11 @@
 
           <t>An object payload field.</t>
         </list></t>
+
+      <t>The Length field specifies the number of octets in the object.
+      The Length in the 'Reflect All' object of a reply message MUST be equal
+      to the Length in the 'Reflect All' object of the respective request 
+      message. </t>
 
       <t>The C-Type value is used for indicating whether the probed node was
       able to process the object. The following C-Type values are
@@ -333,10 +338,14 @@
       Unsupported Object'.</t>
 
       <t>The object payload field in the ICMPv6 Extended Echo Request message
-      MAY contain all zeros. Alternatively, this field MAY contain arbitrary
-      data. In reply messages the object payload field MUST contain the
-      received request message starting from the beginning of the IPv6 header
-      and according to the object length of the 'Reflect All' object.</t>
+      is a placeholder for the corresponding reply message. Its length 
+      determines the number of bytes, starting from the beginning of the IPv6
+      header, that the probed node includes in the object payload of the 
+      reply. The object payload field in a request message MAY contain all 
+      zeros. Alternatively, this field MAY contain arbitrary data. In reply 
+      messages the object payload field MUST contain the received request 
+      message starting from the beginning of the IPv6 header and according 
+      to the length of the payload object.</t>
     </section>
 
     <section anchor="IANA" title="IANA Considerations">
