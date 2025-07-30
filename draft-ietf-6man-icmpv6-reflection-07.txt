@@ -5,14 +5,14 @@
 6MAN                                                          T. Mizrahi
 Internet-Draft                                                    Huawei
 Intended status: Standards Track                                   X. He
-Expires: 31 January 2026                                   China Telecom
+Expires: 30 January 2026                                   China Telecom
                                                                  T. Zhou
                                                                   Huawei
                                                                R. Bonica
                                                                      HPE
                                                                   X. Min
                                                                ZTE Corp.
-                                                            30 July 2025
+                                                            29 July 2025
 
 
          Internet Control Message Protocol (ICMPv6) Reflection
@@ -53,12 +53,12 @@ Status of This Memo
 
 
 
-Mizrahi, et al.          Expires 31 January 2026                [Page 1]
+Mizrahi, et al.          Expires 30 January 2026                [Page 1]
 
 Internet-Draft              ICMPv6 Reflection                  July 2025
 
 
-   This Internet-Draft will expire on 31 January 2026.
+   This Internet-Draft will expire on 30 January 2026.
 
 Copyright Notice
 
@@ -109,7 +109,7 @@ Table of Contents
 
 
 
-Mizrahi, et al.          Expires 31 January 2026                [Page 2]
+Mizrahi, et al.          Expires 30 January 2026                [Page 2]
 
 Internet-Draft              ICMPv6 Reflection                  July 2025
 
@@ -119,7 +119,7 @@ Internet-Draft              ICMPv6 Reflection                  July 2025
    message that the probed node sends is called the "reply message".
 
    The reply message includes a copy of the request message, starting
-   from its IPv6 header, as it was when it arrived at the probed node.
+   from its IPv6 header, as was when it arrived at the probed node.
 
    The ICMPv6 Reflection utility uses the ICMPv6 Extended Echo Request
    and Extended Echo Reply message types [I-D.ietf-intarea-rfc8335bis].
@@ -135,8 +135,8 @@ Internet-Draft              ICMPv6 Reflection                  July 2025
    message, which includes "as much of invoking packet as possible
    without the ICMPv6 packet exceeding the minimum IPv6 MTU" [RFC4443].
    However, middle boxes modify the invoking packet in ICMPv6
-   Destination Unreachable messages (e.g.  [RFC3022]).  By contrast,
-   middle boxes do not modify the 'Reflect All' object.
+   Destination Unreachable messages (e.g. [RFC3022]).  By contrast,
+   middle boxes do not modify the Reflect All object.
 
 2.  Requirement Language
 
@@ -165,7 +165,7 @@ Internet-Draft              ICMPv6 Reflection                  July 2025
 
 
 
-Mizrahi, et al.          Expires 31 January 2026                [Page 3]
+Mizrahi, et al.          Expires 30 January 2026                [Page 3]
 
 Internet-Draft              ICMPv6 Reflection                  July 2025
 
@@ -221,7 +221,7 @@ Internet-Draft              ICMPv6 Reflection                  July 2025
 
 
 
-Mizrahi, et al.          Expires 31 January 2026                [Page 4]
+Mizrahi, et al.          Expires 30 January 2026                [Page 4]
 
 Internet-Draft              ICMPv6 Reflection                  July 2025
 
@@ -235,7 +235,7 @@ Internet-Draft              ICMPv6 Reflection                  July 2025
    header, ICMPv6 header and ICMP Extension Header of the request
    message.  The request and reply messages have the same length.
 
-   Middle boxes MUST NOT modify the 'Reflect All' extension object.
+   Middle boxes MUST NOT modify the Reflect All extension object.
 
          +----------------------------+   +----------------------------+
          |        IPv6 Header         |   |        IPv6 Header         |
@@ -277,7 +277,7 @@ Internet-Draft              ICMPv6 Reflection                  July 2025
 
 
 
-Mizrahi, et al.          Expires 31 January 2026                [Page 5]
+Mizrahi, et al.          Expires 30 January 2026                [Page 5]
 
 Internet-Draft              ICMPv6 Reflection                  July 2025
 
@@ -333,7 +333,7 @@ Internet-Draft              ICMPv6 Reflection                  July 2025
 
 
 
-Mizrahi, et al.          Expires 31 January 2026                [Page 6]
+Mizrahi, et al.          Expires 30 January 2026                [Page 6]
 
 Internet-Draft              ICMPv6 Reflection                  July 2025
 
@@ -389,7 +389,7 @@ Internet-Draft              ICMPv6 Reflection                  July 2025
 
 
 
-Mizrahi, et al.          Expires 31 January 2026                [Page 7]
+Mizrahi, et al.          Expires 30 January 2026                [Page 7]
 
 Internet-Draft              ICMPv6 Reflection                  July 2025
 
@@ -414,11 +414,11 @@ Internet-Draft              ICMPv6 Reflection                  July 2025
 9.1.  Normative References
 
    [I-D.ietf-intarea-icmp-exten-hdr-len]
-              Bonica, R., hexiaoming, X., Min, X., and T. Mizrahi, "ICMP
-              Extension Header Length Field", Work in Progress,
-              Internet-Draft, draft-ietf-intarea-icmp-exten-hdr-len-03,
-              20 July 2025, <https://datatracker.ietf.org/doc/html/
-              draft-ietf-intarea-icmp-exten-hdr-len-03>.
+              Bonica, R., He, X., Min, X., and T. Mizrahi, "ICMP
+              Extension Structure Length Field", Work in Progress,
+              Internet-Draft, draft-ietf-intarea-icmp-exten-hdr-len-04,
+              29 July 2025, <https://datatracker.ietf.org/doc/html/
+              draft-ietf-intarea-icmp-exten-hdr-len-04>.
 
    [I-D.ietf-intarea-rfc8335bis]
               Fenner, B., Bonica, R., Thomas, R., Linkova, J., Lenart,
@@ -445,7 +445,7 @@ Internet-Draft              ICMPv6 Reflection                  July 2025
 
 
 
-Mizrahi, et al.          Expires 31 January 2026                [Page 8]
+Mizrahi, et al.          Expires 30 January 2026                [Page 8]
 
 Internet-Draft              ICMPv6 Reflection                  July 2025
 
@@ -501,7 +501,7 @@ Internet-Draft              ICMPv6 Reflection                  July 2025
 
 
 
-Mizrahi, et al.          Expires 31 January 2026                [Page 9]
+Mizrahi, et al.          Expires 30 January 2026                [Page 9]
 
 Internet-Draft              ICMPv6 Reflection                  July 2025
 
@@ -557,7 +557,7 @@ Authors' Addresses
 
 
 
-Mizrahi, et al.          Expires 31 January 2026               [Page 10]
+Mizrahi, et al.          Expires 30 January 2026               [Page 10]
 
 Internet-Draft              ICMPv6 Reflection                  July 2025
 
@@ -613,4 +613,4 @@ Internet-Draft              ICMPv6 Reflection                  July 2025
 
 
 
-Mizrahi, et al.          Expires 31 January 2026               [Page 11]
+Mizrahi, et al.          Expires 30 January 2026               [Page 11]
