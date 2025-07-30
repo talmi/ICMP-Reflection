@@ -91,16 +91,16 @@
       Reflection utility is a diagnostic tool, similar to Ping and the ICMPv6
       Probe utility. It is similar to Ping and Probe in that it relies on a
       stateless message exchange between a probing node and a probed node. The
-      probing node sends a query to the probed node and the probed node
-      responds to the query.</t>
+      probing node sends a request to the probed node and the probed node
+      responds to the request.</t>
 
       <t>The ICMPv6 Reflection utility differs from Ping and Probe because, in
       the ICMPv6 Reflection utility, the probing node requests a snapshot of
-      the query, as it arrived at the probed node. The probed node returns the
-      requested snapshot.</t>
+      the message that it sent, as it was when arrived at the probed node. The
+      probed node returns the requested snapshot.</t>
 
       <t>The ICMPv6 Reflection utility is useful because it allows the user to
-      see how the network modified the query as it traveled from the probing
+      see how the network modified the request as it traveled from the probing
       node to the probed node.</t>
     </abstract>
   </front>
@@ -109,17 +109,16 @@
     <section title="Introduction">
       <t>The ICMPv6 Reflection utility is an IPv6 <xref target="RFC8200"/>
       diagnostic tool. It is similar to Ping <xref target="RFC2151"/> and the
-      ICMPv6 Probe <xref target="RFC8335"/>, <xref
-      target="I-D.ietf-intarea-rfc8335bis"/> utility in the following
-      respects:</t>
+      ICMPv6 Probe <xref target="I-D.ietf-intarea-rfc8335bis"/> utility in the
+      following respects:</t>
 
       <t><list style="symbols">
           <t>A probing node sends an ICMPv6 <xref target="RFC4443"/> message
-          to a probed node. This ICMP message requests the received packet to
+          to a probed node. This ICMP message requests that it
           be reflected back to the probing node.</t>
 
-          <t>The probed node receives the above-mentioned message, encodes the
-          received packet into another ICMPv6 message, and sends that ICMPv6
+          <t>The probed node receives the above-mentioned message, encodes it
+          into another ICMPv6 message, and sends that ICMPv6
           message back to the probing node.</t>
         </list></t>
 
@@ -127,9 +126,8 @@
       probing node sends is called the "request message" and the ICMPv6
       message that the probed node sends is called the "reply message".</t>
 
-      <t>Using the IPv6 Reflection utility, the reply message includes a copy
-      of the request message, starting from its IPv6 header, as it arrived at
-      the probed node.</t>
+      <t>The reply message includes a copy of the request message, starting
+      from its IPv6 header, as it was when it arrived at the probed node.</t>
 
       <t>The ICMPv6 Reflection utility uses the ICMPv6 Extended Echo Request
       and Extended Echo Reply message types <xref
@@ -139,16 +137,15 @@
       document defines the 'Reflect All' object, which is used for reflecting
       the request message, as it arrived at the probed node.</t>
 
-      <t>An alternative approach that could be considered involves the probing
+      <t>An alternative approach involves the probing
       node sending a UDP packet with an unused destination port to the probed
-      node, causing the probed node to send an ICMPv6 Destination Unreachable
-      message, which includes "As much of invoking packet as possible without
-      the ICMPv6 packet exceeding the minimum IPv6 MTU" <xref
-      target="RFC4443"/>. The benefit of ICMPv6 Reflection is that the payload
-      of ICMP error messages such as Destination Unreachable might be modified
-      by middleboxes (e.g. <xref target="RFC3022"/>), whereas ICMPv6
-      Reflection is intended to reflect the request message as received by the
-      probed node.</t>
+      node. This causes the probed node to send an ICMPv6 Destination 
+      Unreachable message, which includes "as much of invoking packet as 
+      possible without the ICMPv6 packet exceeding the minimum IPv6 MTU" <xref
+      target="RFC4443"/>. However, middle boxes modify the invoking packet
+      in ICMPv6 Destination Unreachable messages (e.g. 
+      <xref target="RFC3022"/>). By contrast, middle boxes do not modify the
+      'Reflect All' object. </t>
     </section>
 
     <section title="Requirement Language">
@@ -195,10 +192,11 @@
       target="I-D.ietf-intarea-rfc8335bis"/> to the probed node. The ICMPv6
       Extended Echo Request message contains an ICMP Extension Structure <xref
       target="RFC4884"/> and the ICMP Extension Structure contains an
-      Extension Header followed by the 'Reflect All' object, which is defined
-      in this document. The ICMP Extension Header MAY include the Length
+      Extension Header.  The ICMP Extension Header MUST include the Length
       field, as defined in <xref
-      target="I-D.ietf-intarea-icmp-exten-hdr-len"/>.</t>
+      target="I-D.ietf-intarea-icmp-exten-hdr-len"/>. The ICMP Extension 
+      structure includes a 'Reflect All' object, which is defined in this 
+      document.</t>
 
       <t>The 'Reflect All' object contains an object payload field whose
       length SHOULD be sufficient to carry the IPv6 and ICMP header of the
@@ -208,14 +206,16 @@
       <t>The probed node receives the ICMPv6 Extended Echo Request and formats
       an ICMPv6 Extended Echo Reply message. The main body of the ICMPv6
       Extended Echo Reply message reflects the status of an interface on the
-      probed node. That interface is identified by the Destination Address in
-      the request message.</t>
+      probed node.</t>
 
       <t>The ICMPv6 Extended Echo Reply message also contains an ICMP
-      Extension Structure. The ICMP Extension Structure MUST contain the
-      'Reflect All' object that the ICMPv6 Extended Echo Request message
-      contained. If the following requirements are satisfied, the probed node
-      populates the payload field of the 'Reflect All' object:</t>
+      Extension Structure. The ICMP Extension Header MUST include the Length
+      field, as defined in <xref
+      target="I-D.ietf-intarea-icmp-exten-hdr-len"/>. The ICMP Extension 
+      Structure also MUST contain the 'Reflect All' object that the ICMPv6 
+      Extended Echo Request message contained. If the following requirements 
+      are satisfied, the probed node populates the payload field of the 
+      'Reflect All' object:</t>
 
       <t><list style="symbols">
           <t>The probed node supports the 'Reflect All' object.</t>
@@ -234,12 +234,7 @@
       Extension Header of the request message. The request and reply messages
       have the same length.</t>
 
-      <t>It should be noted that while some middleboxes might alter the
-      payload of ICMP error messages, such modifications do not apply to ICMP
-      informational messages, such as Extended Echo Request and Reply. This
-      ensures that the reflected information reaches the probing node exactly
-      as sent by the probed node. The payload of Extended Echo Reply messages
-      MUST NOT be modified by middleboxes.</t>
+      <t>Middle boxes MUST NOT modify the 'Reflect All' extension object.</t>
 
       <figure align="center" anchor="ReflectionFormats"
               title="ICMPv6 Reflection Message Formats">
@@ -272,10 +267,9 @@
            ]]></artwork>
       </figure>
 
-      <t>Existing implementations of <xref target="RFC8335"/> do not support
-      the 'Reflect All' object as defined in the current document. If a node
-      that does not support the 'Reflect All' object receives an ICMP Extended
-      Echo Request containing this object, the expected behavior according to
+      <t>If a node that does not support the 'Reflect All' object receives an 
+      ICMP Extended Echo Request containing this object, the expected behavior 
+      according to <xref target="I-D.ietf-intarea-rfc8335bis"/> and 
       <xref target="RFC8335"/> is to respond with an ICMP Echo Reply message
       that includes the "Malformed Query" code in the Code field.</t>
     </section>
@@ -289,14 +283,6 @@
       <t>In the ICMPv6 Reflection utility, the 'Reflect All' object MUST be
       included in the Extension Structure. If there is more than one object,
       the 'Reflect All' object MUST be the first object.</t>
-
-      <t>In the IPv6 Reflection utility, the request message MUST NOT include
-      the Interface Identification Object <xref
-      target="I-D.ietf-intarea-rfc8335bis"/>. This difference allows the
-      probed node to distinguish Probe request messages <xref
-      target="I-D.ietf-intarea-rfc8335bis"/> from Reflection request messages,
-      since a Probe request message always includes the Interface
-      Identification Object, while a Refelction request does not.</t>
 
       <t>The structure of the 'Reflect All' object follows the specification
       of ICMP Extension Objects as defined in <xref target="RFC4884"/> and
