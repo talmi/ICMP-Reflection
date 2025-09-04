@@ -195,7 +195,7 @@
 
       <t>The 'Reflect All' object contains an object payload field 
       whose length SHOULD be sufficient to carry the IPv6 and ICMP header of the
-      reflected request message. The total length of both the request and 
+      reflected request message. The length of both the request and 
       reply packets SHOULD NOT exceed the IPv6 minimum MTU (1280 bytes),
       to avoid triggering fragmentation.</t>
 
