@@ -5,14 +5,14 @@
 6MAN                                                          T. Mizrahi
 Internet-Draft                                                    Huawei
 Intended status: Standards Track                                   X. He
-Expires: 30 April 2026                                     China Telecom
+Expires: 6 May 2026                                        China Telecom
                                                                  T. Zhou
                                                                   Huawei
                                                                R. Bonica
                                                                      HPE
                                                                   X. Min
                                                                ZTE Corp.
-                                                         27 October 2025
+                                                         2 November 2025
 
 
          Internet Control Message Protocol (ICMPv6) Reflection
@@ -53,12 +53,12 @@ Status of This Memo
 
 
 
-Mizrahi, et al.           Expires 30 April 2026                 [Page 1]
+Mizrahi, et al.            Expires 6 May 2026                   [Page 1]
 
-Internet-Draft              ICMPv6 Reflection               October 2025
+Internet-Draft              ICMPv6 Reflection              November 2025
 
 
-   This Internet-Draft will expire on 30 April 2026.
+   This Internet-Draft will expire on 6 May 2026.
 
 Copyright Notice
 
@@ -109,9 +109,9 @@ Table of Contents
 
 
 
-Mizrahi, et al.           Expires 30 April 2026                 [Page 2]
+Mizrahi, et al.            Expires 6 May 2026                   [Page 2]
 
-Internet-Draft              ICMPv6 Reflection               October 2025
+Internet-Draft              ICMPv6 Reflection              November 2025
 
 
    For the purposes of this document, the ICMPv6 message that the
@@ -165,9 +165,9 @@ Internet-Draft              ICMPv6 Reflection               October 2025
 
 
 
-Mizrahi, et al.           Expires 30 April 2026                 [Page 3]
+Mizrahi, et al.            Expires 6 May 2026                   [Page 3]
 
-Internet-Draft              ICMPv6 Reflection               October 2025
+Internet-Draft              ICMPv6 Reflection              November 2025
 
 
    These extensions are used to collect information along a packet's
@@ -221,9 +221,9 @@ Internet-Draft              ICMPv6 Reflection               October 2025
 
 
 
-Mizrahi, et al.           Expires 30 April 2026                 [Page 4]
+Mizrahi, et al.            Expires 6 May 2026                   [Page 4]
 
-Internet-Draft              ICMPv6 Reflection               October 2025
+Internet-Draft              ICMPv6 Reflection              November 2025
 
 
    *  Responding to the request message does not violate the probed
@@ -277,9 +277,9 @@ Internet-Draft              ICMPv6 Reflection               October 2025
 
 
 
-Mizrahi, et al.           Expires 30 April 2026                 [Page 5]
+Mizrahi, et al.            Expires 6 May 2026                   [Page 5]
 
-Internet-Draft              ICMPv6 Reflection               October 2025
+Internet-Draft              ICMPv6 Reflection              November 2025
 
 
                Figure 1: ICMPv6 Reflection Message Formats
@@ -333,9 +333,9 @@ Internet-Draft              ICMPv6 Reflection               October 2025
 
 
 
-Mizrahi, et al.           Expires 30 April 2026                 [Page 6]
+Mizrahi, et al.            Expires 6 May 2026                   [Page 6]
 
-Internet-Draft              ICMPv6 Reflection               October 2025
+Internet-Draft              ICMPv6 Reflection              November 2025
 
 
    The C-Type field of a Reflection object in a request message MUST be
@@ -389,9 +389,9 @@ Internet-Draft              ICMPv6 Reflection               October 2025
 
 
 
-Mizrahi, et al.           Expires 30 April 2026                 [Page 7]
+Mizrahi, et al.            Expires 6 May 2026                   [Page 7]
 
-Internet-Draft              ICMPv6 Reflection               October 2025
+Internet-Draft              ICMPv6 Reflection              November 2025
 
 
    The following C-Type values are defined for the Reflect All object
@@ -445,9 +445,9 @@ Internet-Draft              ICMPv6 Reflection               October 2025
 
 
 
-Mizrahi, et al.           Expires 30 April 2026                 [Page 8]
+Mizrahi, et al.            Expires 6 May 2026                   [Page 8]
 
-Internet-Draft              ICMPv6 Reflection               October 2025
+Internet-Draft              ICMPv6 Reflection              November 2025
 
 
    As in other monitoring and measurement mechanisms [RFC7276], a
@@ -467,8 +467,9 @@ Internet-Draft              ICMPv6 Reflection               October 2025
 8.  Acknowledgements
 
    The authors gratefully acknowledge Sebastian Moeller, Zafar Ali, Bob
-   Hinden, Jen Linkova, Jeremy Duncan, Greg Mirsky, Nick Buraglio and
-   Maciej Zenczykowski for their insightful comments.
+   Hinden, Jen Linkova, Jeremy Duncan, Greg Mirsky, Nick Buraglio,
+   Maciej Zenczykowski, Robert Sparks, Thomas Fossati and Kyle Rose for
+   their insightful comments.
 
 9.  References
 
@@ -500,10 +501,9 @@ Internet-Draft              ICMPv6 Reflection               October 2025
 
 
 
-
-Mizrahi, et al.           Expires 30 April 2026                 [Page 9]
+Mizrahi, et al.            Expires 6 May 2026                   [Page 9]
 
-Internet-Draft              ICMPv6 Reflection               October 2025
+Internet-Draft              ICMPv6 Reflection              November 2025
 
 
    [RFC8174]  Leiba, B., "Ambiguity of Uppercase vs Lowercase in RFC
@@ -557,9 +557,9 @@ Internet-Draft              ICMPv6 Reflection               October 2025
 
 
 
-Mizrahi, et al.           Expires 30 April 2026                [Page 10]
+Mizrahi, et al.            Expires 6 May 2026                  [Page 10]
 
-Internet-Draft              ICMPv6 Reflection               October 2025
+Internet-Draft              ICMPv6 Reflection              November 2025
 
 
    [RFC9486]  Bhandari, S., Ed. and F. Brockners, Ed., "IPv6 Options for
@@ -613,9 +613,9 @@ Authors' Addresses
 
 
 
-Mizrahi, et al.           Expires 30 April 2026                [Page 11]
+Mizrahi, et al.            Expires 6 May 2026                  [Page 11]
 
-Internet-Draft              ICMPv6 Reflection               October 2025
+Internet-Draft              ICMPv6 Reflection              November 2025
 
 
    Tianran Zhou
@@ -669,4 +669,4 @@ Internet-Draft              ICMPv6 Reflection               October 2025
 
 
 
-Mizrahi, et al.           Expires 30 April 2026                [Page 12]
+Mizrahi, et al.            Expires 6 May 2026                  [Page 12]
