@@ -5,14 +5,14 @@
 6MAN                                                          T. Mizrahi
 Internet-Draft                                                    Huawei
 Intended status: Standards Track                                   X. He
-Expires: 22 May 2026                                       China Telecom
+Expires: 23 May 2026                                       China Telecom
                                                                  T. Zhou
                                                                   Huawei
                                                                R. Bonica
                                                                      HPE
                                                                   X. Min
                                                                ZTE Corp.
-                                                        18 November 2025
+                                                        19 November 2025
 
 
          Internet Control Message Protocol (ICMPv6) Reflection
@@ -53,12 +53,12 @@ Status of This Memo
 
 
 
-Mizrahi, et al.            Expires 22 May 2026                  [Page 1]
+Mizrahi, et al.            Expires 23 May 2026                  [Page 1]
 
 Internet-Draft              ICMPv6 Reflection              November 2025
 
 
-   This Internet-Draft will expire on 22 May 2026.
+   This Internet-Draft will expire on 23 May 2026.
 
 Copyright Notice
 
@@ -109,7 +109,7 @@ Table of Contents
 
 
 
-Mizrahi, et al.            Expires 22 May 2026                  [Page 2]
+Mizrahi, et al.            Expires 23 May 2026                  [Page 2]
 
 Internet-Draft              ICMPv6 Reflection              November 2025
 
@@ -165,7 +165,7 @@ Internet-Draft              ICMPv6 Reflection              November 2025
 
 
 
-Mizrahi, et al.            Expires 22 May 2026                  [Page 3]
+Mizrahi, et al.            Expires 23 May 2026                  [Page 3]
 
 Internet-Draft              ICMPv6 Reflection              November 2025
 
@@ -200,7 +200,7 @@ Internet-Draft              ICMPv6 Reflection              November 2025
    The probed node receives the ICMPv6 Extended Echo Request and formats
    an ICMPv6 Extended Echo Reply message provided that responding does
    not conflict with its policy.  The total length of the ICMPv6
-   Extended Echo Reply message MUST be equal to the total length of the
+   Extended Echo Reply message is equal to the total length of the
    corresponding request message.  The main body of the ICMPv6 Extended
    Echo Reply message, as in [I-D.ietf-intarea-rfc8335bis], reflects the
    status of an interface on the probed node.
@@ -221,7 +221,7 @@ Internet-Draft              ICMPv6 Reflection              November 2025
 
 
 
-Mizrahi, et al.            Expires 22 May 2026                  [Page 4]
+Mizrahi, et al.            Expires 23 May 2026                  [Page 4]
 
 Internet-Draft              ICMPv6 Reflection              November 2025
 
@@ -277,7 +277,7 @@ Internet-Draft              ICMPv6 Reflection              November 2025
 
 
 
-Mizrahi, et al.            Expires 22 May 2026                  [Page 5]
+Mizrahi, et al.            Expires 23 May 2026                  [Page 5]
 
 Internet-Draft              ICMPv6 Reflection              November 2025
 
@@ -333,7 +333,7 @@ Internet-Draft              ICMPv6 Reflection              November 2025
 
 
 
-Mizrahi, et al.            Expires 22 May 2026                  [Page 6]
+Mizrahi, et al.            Expires 23 May 2026                  [Page 6]
 
 Internet-Draft              ICMPv6 Reflection              November 2025
 
@@ -389,7 +389,7 @@ Internet-Draft              ICMPv6 Reflection              November 2025
 
 
 
-Mizrahi, et al.            Expires 22 May 2026                  [Page 7]
+Mizrahi, et al.            Expires 23 May 2026                  [Page 7]
 
 Internet-Draft              ICMPv6 Reflection              November 2025
 
@@ -445,7 +445,7 @@ Internet-Draft              ICMPv6 Reflection              November 2025
 
 
 
-Mizrahi, et al.            Expires 22 May 2026                  [Page 8]
+Mizrahi, et al.            Expires 23 May 2026                  [Page 8]
 
 Internet-Draft              ICMPv6 Reflection              November 2025
 
@@ -501,7 +501,7 @@ Internet-Draft              ICMPv6 Reflection              November 2025
 
 
 
-Mizrahi, et al.            Expires 22 May 2026                  [Page 9]
+Mizrahi, et al.            Expires 23 May 2026                  [Page 9]
 
 Internet-Draft              ICMPv6 Reflection              November 2025
 
@@ -557,7 +557,7 @@ Internet-Draft              ICMPv6 Reflection              November 2025
 
 
 
-Mizrahi, et al.            Expires 22 May 2026                 [Page 10]
+Mizrahi, et al.            Expires 23 May 2026                 [Page 10]
 
 Internet-Draft              ICMPv6 Reflection              November 2025
 
@@ -613,7 +613,7 @@ Authors' Addresses
 
 
 
-Mizrahi, et al.            Expires 22 May 2026                 [Page 11]
+Mizrahi, et al.            Expires 23 May 2026                 [Page 11]
 
 Internet-Draft              ICMPv6 Reflection              November 2025
 
@@ -669,4 +669,4 @@ Internet-Draft              ICMPv6 Reflection              November 2025
 
 
 
-Mizrahi, et al.            Expires 22 May 2026                 [Page 12]
+Mizrahi, et al.            Expires 23 May 2026                 [Page 12]

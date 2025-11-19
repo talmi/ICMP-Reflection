@@ -203,7 +203,7 @@
       <t>The probed node receives the ICMPv6 Extended Echo Request and formats
       an ICMPv6 Extended Echo Reply message provided that responding does not conflict 
       with its policy. The total length of the ICMPv6
-      Extended Echo Reply message MUST be equal to the total length of the
+      Extended Echo Reply message is equal to the total length of the
       corresponding request message. The main body of the ICMPv6
       Extended Echo Reply message, as in 
       <xref target="I-D.ietf-intarea-rfc8335bis"/>, reflects the status of an interface on the
