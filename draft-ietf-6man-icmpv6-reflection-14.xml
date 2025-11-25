@@ -1,0 +1,536 @@
+<?xml version="1.0" encoding="US-ASCII"?>
+<!DOCTYPE rfc SYSTEM "rfc2629.dtd">
+<?xml-stylesheet type='text/xsl' href='rfc2629.xslt' ?>
+<?rfc strict="yes" ?>
+<?rfc toc="yes"?>
+<?rfc tocdepth="4"?>
+<?rfc symrefs="yes"?>
+<?rfc sortrefs="yes" ?>
+<?rfc compact="yes" ?>
+<?rfc subcompact="no" ?>
+<rfc category="std" docName="draft-ietf-6man-icmpv6-reflection-14"
+     ipr="trust200902">
+  <front>
+    <title abbrev="ICMPv6 Reflection">Internet Control Message Protocol
+    (ICMPv6) Reflection</title>
+
+    <author fullname="Tal Mizrahi" initials="T." surname="Mizrahi">
+      <organization abbrev="">Huawei</organization>
+
+      <address>
+        <postal>
+          <street>25 Matam</street>
+
+          <city>Haifa</city>
+
+          <code>3190501</code>
+
+          <country>Israel</country>
+        </postal>
+
+        <email>tal.mizrahi.phd@gmail.com</email>
+      </address>
+    </author>
+
+    <author fullname="Xiaoming He" initials="X." surname="He">
+      <organization>China Telecom</organization>
+
+      <address>
+        <email>hexm4@chinatelecom.cn</email>
+      </address>
+    </author>
+
+    <author fullname="Tianran Zhou" initials="T." surname="Zhou">
+      <organization abbrev="">Huawei</organization>
+
+      <address>
+        <postal>
+          <street>156 Beiqing Rd.</street>
+
+          <city>Beijing</city>
+
+          <code>100095</code>
+
+          <country>China</country>
+        </postal>
+
+        <email>zhoutianran@huawei.com</email>
+      </address>
+    </author>
+
+    <author fullname="Ron Bonica" initials="R." surname="Bonica">
+      <organization>HPE</organization>
+
+      <address>
+        <postal>
+          <country>USA</country>
+        </postal>
+
+        <email>ronald.bonica@hpe.com</email>
+      </address>
+    </author>
+
+    <author fullname="Xiao Min" initials="X." surname="Min">
+      <organization>ZTE Corp.</organization>
+
+      <address>
+        <email>xiao.min2@zte.com.cn</email>
+      </address>
+    </author>
+
+    <date year="2025"/>
+
+    <workgroup>6MAN</workgroup>
+
+    <keyword>ICMP</keyword>
+
+    <keyword>ICMPv6</keyword>
+
+    <abstract>
+      <t>This document describes the ICMPv6 Reflection utility. The ICMPv6
+      Reflection utility is a diagnostic tool, similar to Ping and the ICMPv6
+      Probe utility. It is similar to Ping and Probe in that it relies on a
+      stateless message exchange between a probing node and a probed node. The
+      probing node sends a request to the probed node and the probed node
+      responds to the request.</t>
+
+      <t>The ICMPv6 Reflection utility differs from Ping and Probe because, in
+      the ICMPv6 Reflection utility, the probing node requests a snapshot of
+      the message that it sent, as it was when arrived at the probed node. The probed node returns the
+      requested snapshot.</t>
+
+      <t>The ICMPv6 Reflection utility is useful because it can allow the user to
+      see how the network modified the request as it traveled from the probing
+      node to the probed node.</t>
+    </abstract>
+  </front>
+
+  <middle>
+    <section title="Introduction">
+      <t>The ICMPv6 Reflection utility is an IPv6 <xref target="RFC8200"/>
+      diagnostic tool. It is similar to Ping <xref target="RFC2151"/> and the
+      ICMPv6 Probe  <xref target="I-D.ietf-intarea-rfc8335bis"/> utility in the following
+      respects:</t>
+
+      <t><list style="symbols">
+          <t>A probing node sends an ICMPv6 <xref target="RFC4443"/> message
+          to a probed node. This ICMP message requests that it
+          be reflected back to the probing node.</t>
+
+          <t>The probed node receives the above-mentioned message, encodes it
+          into another ICMPv6 message, and sends that ICMPv6
+          message back to the probing node.</t>
+        </list></t>
+
+      <t>For the purposes of this document, the ICMPv6 message that the
+      probing node sends is called the "request message" and the ICMPv6
+      message that the probed node sends is called the "reply message".</t>
+
+      <t>The reply message includes a copy
+      of the request message, starting from its IPv6 header, as it was when it arrived at
+      the probed node.</t>
+
+      <t>The ICMPv6 Reflection utility uses the ICMPv6 Extended Echo Request
+      and Extended Echo Reply message types <xref
+      target="I-D.ietf-intarea-rfc8335bis"/>. Each of these message types
+      includes an ICMP Extension Structure <xref target="RFC4884"/>. The ICMP
+      Extension Structure includes one or more extension objects. This
+      document defines the 'Reflect All' object, which is used for reflecting
+      the request message, as it arrived at the probed node.</t>
+
+      <t>The document acknowledges an alternative approach that involves the 
+      probing node sending a UDP packet with an unused destination port to the 
+      probed node. This causes the probed node to send an ICMPv6 Destination 
+      Unreachable message, which includes "as much of invoking packet as 
+      possible without the ICMPv6 packet exceeding the minimum IPv6 MTU" <xref
+      target="RFC4443"/>. Similarly, sending an ICMPv6 echo request to an 
+      address beyond the probed node with a TTL that expires on the probed 
+      node would result in an ICMPv6 Time Exceeded message along with the 
+      invoking packet. However, these approaches use ICMPv6 error processing 
+      which may be subject to implementation and policy controls on the probed 
+      nodes as well as nodes along the path that may cause the monitoring to 
+      fail. The solution specified in this document is purpose-built for 
+      monitoring how packets are affected along a network path that enables 
+      operators to adapt the policy controls on the nodes along the path for it.
+      </t>
+    </section>
+
+    <section title="Requirement Language">
+      <t>The key words "MUST", "MUST NOT", "REQUIRED", "SHALL", "SHALL NOT",
+      "SHOULD", "SHOULD NOT", "RECOMMENDED", "NOT RECOMMENDED", "MAY", and
+      "OPTIONAL" in this document are to be interpreted as described in BCP 14
+      <xref target="RFC2119"/> <xref target="RFC8174"/> when, and only when,
+      they appear in all capitals, as shown here.</t>
+    </section>
+
+    <section anchor="UseCaseSec" title="Use Cases">
+      <t>The ICMPv6 Reflection utility can also be used to determine how the
+      probe message's IPv6 header has changed along its delivery path. For
+      example, it can be used to determine the value of the Hop Limit, DSCP and ECN fields
+      as received by the probed node. The utility can also be used for 
+      determining how middleboxes have changed the
+      Source Address, Destination Address, and Flow Label.</t>
+
+      <t>The ICMPv6 Reflection utility also provides a mechanism by which
+      IPv6 extension headers in the request message are reflected back to
+      the probing node. For example, this information can be useful
+      to the probing node when one of the following mutable IPv6 extension 
+      headers is used:</t>
+
+      <t><list style="symbols">
+          <t>IPv6 Options for In Situ Operations, Administration, and
+          Maintenance (IOAM) <xref target="RFC9486"/></t>
+
+          <t>Inband Flow Analyzer <xref target="I-D.kumar-ippm-ifa"/></t>
+
+          <t>Path Tracing in SRv6 networks <xref
+          target="I-D.filsfils-ippm-path-tracing"/></t>
+        </list></t>
+
+      <t>These extensions are used to collect information along a packet's
+      delivery path, allowing the collected information to be sent to a
+      controller for processing. However, the Reflection utility allows 
+      this information to be sent back to the probing node.</t>
+
+    </section>
+
+    <section anchor="TheorySec" title="Theory of Operation">
+      <t>The probing node sends an ICMPv6 Extended Echo Request message <xref
+      target="I-D.ietf-intarea-rfc8335bis"/> to the probed node. The ICMPv6
+      Extended Echo Request message contains an ICMP Extension Structure <xref
+      target="RFC4884"/>. The ICMP Extension structure includes an Extension 
+      Header and a 'Reflect All' object, which is defined in this document. 
+      </t>
+
+      <t>The 'Reflect All' object contains an object payload field 
+      whose length SHOULD be sufficient to carry the IPv6 and ICMP header of the
+      reflected request message. The length of both the request and 
+      reply packets SHOULD NOT exceed the IPv6 minimum MTU defined in <xref target="RFC8200"/>,
+      to avoid triggering fragmentation.</t>
+
+      <t>The probed node receives the ICMPv6 Extended Echo Request and formats
+      an ICMPv6 Extended Echo Reply message provided that this action aligns
+      with its local policies, such as security policies and rate limiting.
+      The total length of the ICMPv6
+      Extended Echo Reply message is equal to the total length of the
+      corresponding request message, unless the probed node's policy restricts 
+      the reply length or the reply size would exceed the MTU,
+      in which cases the reply might be shorter.
+      The main body of the ICMPv6
+      Extended Echo Reply message, as in 
+      <xref target="I-D.ietf-intarea-rfc8335bis"/>, reflects the status of an interface on the
+      probed node.</t>
+
+      <t>The ICMPv6 Extended Echo Reply message also contains an ICMP
+      Extension Structure. 
+      The length of the ICMP Extension Structure in the reply message MUST be 
+      equal to the length of the ICMP Extension Structure of the request 
+      message. The ICMP Extension Structure also MUST contain the
+      'Reflect All' object that the ICMPv6 Extended Echo Request message
+      contained. The length of the 'Reflect All' object in the reply message 
+      MUST be equal to the length
+      of the 'Reflect All' object in the request message.</t>
+
+      <t>An example of a request and a reply is provided in <xref
+      target="ReflectionFormats"/>. In this example the request message
+      includes the 'Reflect All' object. The reply also includes the 'Reflect
+      All' object, containing the IPv6 header, ICMPv6 header and ICMP
+      Extension Header of the request message. The request and reply messages
+      have the same length. The length of the IPv6 header of the request 
+      message is at least 40 octets, depending on whether there are extension 
+      headers, followed by an 8-octet ICMPv6 header, a 4-octet ICMP 
+      Extension Header, and a 4-octet Object Header. For example,
+      if the length of the IPv6 header is H octets,  and the length of the 
+      object payload is H+12 octets, the reply includes the reflected 
+      request message starting from the IPv6 header and up to and including 
+      the ICMP Extension Header, as shown in <xref 
+      target="ReflectionFormats"/>.</t>
+
+      <t>Network elements must not modify the Reflect All extension object.
+      This ensures that the reflected information reaches the probing node
+      exactly as sent by the probed node.</t>
+
+      <figure align="center" anchor="ReflectionFormats"
+              title="ICMPv6 Reflection Message Formats">
+        <artwork align="left"><![CDATA[
+
+       +----------------------------+   +----------------------------+
+       |        IPv6 Header         |   |        IPv6 Header         |
+       |    and extension headers   |   |    and extension headers   |
+       +----------------------------+   +----------------------------+
+       |       ICMPv6 Header        |   |       ICMPv6 Header        |
+       |   Extended Echo Request    |   |    Extended Echo Reply     |
+       +----------------------------+   +----------------------------+
+       |   ICMP Extension Header    |   |   ICMP Extension Header    |
+       +----------------------------+   +----------------------------+
+       |'Reflect All' Object Header |   |'Reflect All' Object Header |
+       +----------------------------+   +----------------------------+
+       |       Object payload       |   |   Request's IPv6 Header    |
+       |  (placeholder for reply)   |   |   and extension headers    |
+       |                            |   |  ------------------------  |
+       |                            |   |  Request's ICMPv6 Header   |
+       |                            |   |   Extended Echo Request    |
+       |                            |   |  ------------------------  |
+       |                            |   | Request's ICMP Ext. Header |
+       +----------------------------+   +----------------------------+
+
+       ^                            ^   ^                            ^
+       |                            |   |                            |
+       +-- Extended Echo Request ---+   +--- Extended Echo Reply ----+
+
+           ]]></artwork>
+      </figure>
+
+      <t>If a node
+      that does not support the 'Reflect All' object receives an ICMP Extended
+      Echo Request containing this object, the expected behavior according to
+      <xref target="I-D.ietf-intarea-rfc8335bis"/> and <xref target="RFC8335"/>
+      is to respond with an ICMP Echo Reply message
+      that includes the "Malformed Query" code in the Code field.</t>
+    </section>
+
+    <section anchor="RefEcho" title="New ICMP Extension Object">
+      <t>This document defines the 'Reflect All' object.</t>
+
+      <t>An implementation that supports ICMPv6 Reflection MUST support the
+      'Reflect All' object.</t>
+
+      <t>In the ICMPv6 Reflection utility, the 'Reflect All' object MUST be
+      the only object in the Extension Structure. An ICMPv6 message
+      MUST NOT include more than one 'Reflect All' object.</t>
+
+      <t>The structure of the 'Reflect All' object follows the specification
+      of ICMP Extension Objects as defined in <xref target="RFC4884"/> and
+      MUST include the following fields:</t>
+
+      <t><list style="symbols">
+          <t>The Length of the 'Reflect All' object.</t>
+
+          <t>An object class (as specified in <xref target="IANA"/>).</t>
+
+          <t>C-Type as described below.</t>
+
+          <t>An object payload field.</t>
+        </list></t>
+
+      <t>The Length field specifies the number of octets in the object.
+      The Length in the 'Reflect All' object of a reply message MUST be equal
+      to the Length in the 'Reflect All' object of the respective request 
+      message. </t>
+
+      <t>The C-Type value is used for indicating whether the probed node was
+      able to process the object. The following C-Type values are
+      supported:</t>
+
+      <t><list style="symbols">
+          <t>(0) Request</t>
+
+          <t>(1) Reply - No Error</t>
+
+          <t>(2) Reply - Unsupported Object</t>
+        </list></t>
+
+      <t>The C-Type field of a Reflection object in a request message MUST be
+      set to the 'Request' value. If the probed node is able to process the
+      'Reflect All' object, it MUST copy the request message starting from 
+      the IPv6 header and up to and including the ICMP Extension Header
+      into the object
+      payload and update the C-Type field to the 'Reply - No Error' value. If
+      the probed node is not able to process the object, it MUST update the
+      C-Type value of the object in the Extended Echo Reply to 'Reply -
+      Unsupported Object'.</t>
+
+      <t>If the 'Reflect All' object is received with an unsupported or an 
+      unexpected C-Type value, the message MUST be discarded. For example, 
+      if a 'Reflect All' object with a 'Reply - No Error' is received in
+      an ICMP Extended Echo Request message, the message is discarded.</t>
+
+      <t>The object payload field in the ICMPv6 Extended Echo Request message
+      is a placeholder for the corresponding reply message. Its length 
+      determines the number of bytes, starting from the beginning of the IPv6
+      header, that the probed node includes in the object payload of the 
+      reply. The object payload field in a request message contains arbitrary data. In reply 
+      messages the object payload field MUST contain the received request 
+      message starting from the beginning of the IPv6 header and according 
+      to the length of the object payload, provided that the probed node 
+      supports the 'Reflect All' object and that responding does not conflict 
+      with its security policy.</t>
+
+      <t>If the 'Reflect All' object is sufficiently long, the reply message 
+      includes the initial octets of the 'Reflect All' object. A notable use 
+      case for including arbitrary data in the object payload is the inclusion 
+      of a transmission timestamp, similar to how conventional Ping utilities 
+      incorporate timestamps into the ICMP payload. If the initial octets of 
+      the 'Reflect All' object payload contain a timestamp and the object is 
+      long enough, the timestamp is reflected back to the probing node, 
+      enabling round-trip time calculations.</t>
+    </section>
+
+    <section anchor="IANA" title="IANA Considerations">
+      <t>IANA is requested to allocate the following values in the "ICMP
+      Extension Object Classes and Class Sub-types" registry.</t>
+
+      <t>The following Object Class values are defined:</t>
+
+      <figure align="center" anchor="IcmpTypes" title="Object Class Allocation">
+        <artwork align="left"><![CDATA[
+         
++-------------+------------------+-----------------+  
+| Class Value |    Class Name    |     Reference   |  
++-------------+------------------+-----------------+  
+|   TBD1      |    Reflect All   | [This document] |  
+|             |                  |                 |
++-------------+------------------+-----------------+
+  ]]></artwork>
+      </figure>
+
+      <t>IANA is requested to create a sub-type registry, "Sub-types - Class TBD1 - Reflect All".
+      The following C-Type values are defined for the Reflect All object class.
+      Unassigned C-Type values will be assigned on a First Come First Served (FCFS) 
+      basis.</t>
+
+      <figure align="center" anchor="SubTypes" title="Sub-types - Class TBD1 - Reflect All">
+        <artwork align="left"><![CDATA[
+         
++----------------+-----------------------------+-----------------+  
+| C-Type (Value) |  Description                |     Reference   |  
++----------------+-----------------------------+-----------------+  
+|  0             |  Request                    | [This document] |  
++----------------+-----------------------------+-----------------+  
+|  1             |  Reply - No Error           | [This document] |  
++----------------+-----------------------------+-----------------+  
+|  2             |  Reply - Unsupported Object | [This document] |  
++----------------+-----------------------------+-----------------+  
+|  3-255         |  Unassigned                 |                 |  
++----------------+-----------------------------+-----------------+  
+  ]]></artwork>
+      </figure>
+
+    </section>
+
+    <section anchor="Security" title="Security Considerations">
+      <t>Since this document uses technologies from <xref target="RFC4443"/>,
+      <xref target="RFC4884"/>, and <xref
+      target="I-D.ietf-intarea-rfc8335bis"/>, it inherits security
+      considerations from those documents. Specifically, security
+      considerations relevant to ICMPv6 also apply
+      to the current document. For example, ICMPv6 can be misused to create 
+      a covert channel between the probing and probed nodes, a technique 
+      commonly known as ICMP tunneling. Another relevant risk is an ICMP 
+      Echo Spoofing attack, where an attacker sends ICMP Echo Request 
+      messages to a target, forging the source IP address to make the 
+      packets appear to originate from a victim host, who subsequently 
+      receives the unsolicited ICMP Echo Reply packets. Importantly, this 
+      document does not introduce any new security risks in this context 
+      compared to other existing ICMP message types.</t>
+
+      <t>It is common practice for network operators to filter (block) or 
+      disable support for various ICMPv6 informational and error messages.
+      This practice is contingent upon the network's security policy and 
+      the location of the nodes. For example, some nodes do not reply to
+      ICMPv6 Echo or do not send ICMPv6 Time Exceeded messages (used in
+      Traceroute), due to policy considerations that may be related to DoS
+      mitigation or to privacy. Network operators SHOULD apply similar
+      considerations to ICMPv6 Extended Echo messages when they are used for
+      Reflection. For example, an operator can choose to disable support for
+      ICMPv6 Reflection in networks or in nodes that do not respond to ICMPv6
+      Echo and/or do not generate ICMPv6 Time Exceeded messages.</t>
+
+      <t>The Reflection procedure that is defined in this document is
+      symmetric in terms of the length of the request and reply messages. This
+      symmetry mitigates the potential for amplification attacks, which would
+      be possible if the reply message was longer than the request
+      message. Furthermore, as defined in <xref target="I-D.ietf-intarea-rfc8335bis"/>,
+      the destination address of the Extended Echo Request is always a unicast 
+      address, thus mitigating the potential for various DDoS attacks.</t>
+
+      <t>As in other monitoring and measurement mechanisms <xref target="RFC7276"/>, a successful 
+      attack on the Reflection utility can create a false illusion of nonexistent issues 
+      or prevent the detection of actual ones.
+      For instance, a probed node can intentionally misrepresents what it received when
+      sending the Reflect All object. A similar effect can be performed by modification of the Reflect All 
+      object along the path between the probed node and the probing node.
+      </t>
+
+      <t>As specified in <xref target="I-D.ietf-intarea-rfc8335bis"/>, in
+      order to protect local resources, implementations SHOULD rate-limit
+      incoming ICMP Extended Echo Request messages. Moreover, as per <xref
+      target="I-D.ietf-intarea-rfc8335bis"/>, by default, ICMP Extend Echo
+      functionality is disabled.</t>
+    </section>
+
+    <section title="Acknowledgements">
+      <t>The authors gratefully acknowledge Sebastian Moeller, Zafar Ali,
+      Bob Hinden, Jen Linkova, Jeremy Duncan, Greg Mirsky, Nick Buraglio,
+      Maciej Zenczykowski, Robert Sparks, Thomas Fossati,
+      Kyle Rose, Suresh Krishnan, Niclas Comstedt, Mohamed Boucadair, Ketan Talaulikar,
+      Deb Cooley, Eric Vyncke, Gorry Fairhurst, Mike Bishop and Roman 
+      Danyliw for their insightful comments.</t>
+    </section>
+  </middle>
+
+  <back>
+    <references title="Normative References">
+      <?rfc include='reference.RFC.2119'?>
+
+      <?rfc include='reference.RFC.8174'?>
+
+      <?rfc include='reference.RFC.8200'?>
+
+      <?rfc include='reference.RFC.4443'?>
+
+      <?rfc include='reference.RFC.4884'?>
+
+       <?rfc include='reference.RFC.8335'?>
+
+      <?rfc include='reference.I-D.ietf-intarea-rfc8335bis'?>
+
+    </references>
+
+    <references title="Informative References">
+      <?rfc include='reference.RFC.9486'?>
+
+      <?rfc include='reference.I-D.filsfils-ippm-path-tracing'?>
+
+      <?rfc include='reference.I-D.kumar-ippm-ifa'?>
+
+      <?rfc include='reference.RFC.2151'?>
+
+      <?rfc include='reference.RFC.7276'?>
+    </references>
+
+    <section numbered="no" title="Contributors">
+      <t>
+        <figure>
+          <artwork><![CDATA[ 
+   Shahar Belkar
+   Huawei
+   8-2 Matam
+   Haifa 3190501
+   Israel
+   Email: shahar.belkar@huawei.com
+
+   
+   Chongfeng Xie
+   China Telecom
+   Email: xiechf@chinatelecom.cn
+
+
+   Zhenqiang Li
+   China Mobile
+   Email: li_zhenqiang@hotmail.com
+
+
+   Justin Iurman
+   Universite de Liege
+   10, Allee de la decouverte (B28)
+   4000 Sart-Tilman
+   Belgium
+   Email: justin.iurman@uliege.be
+
+]]></artwork>
+        </figure>
+      </t>
+    </section>
+  </back>
+</rfc>
