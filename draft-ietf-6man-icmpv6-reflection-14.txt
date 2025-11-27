@@ -5,14 +5,14 @@
 6MAN                                                          T. Mizrahi
 Internet-Draft                                                    Huawei
 Intended status: Standards Track                                   X. He
-Expires: 29 May 2026                                       China Telecom
+Expires: 31 May 2026                                       China Telecom
                                                                  T. Zhou
                                                                   Huawei
                                                                R. Bonica
                                                                      HPE
                                                                   X. Min
                                                                ZTE Corp.
-                                                        25 November 2025
+                                                        27 November 2025
 
 
          Internet Control Message Protocol (ICMPv6) Reflection
@@ -53,12 +53,12 @@ Status of This Memo
 
 
 
-Mizrahi, et al.            Expires 29 May 2026                  [Page 1]
+Mizrahi, et al.            Expires 31 May 2026                  [Page 1]
 
 Internet-Draft              ICMPv6 Reflection              November 2025
 
 
-   This Internet-Draft will expire on 29 May 2026.
+   This Internet-Draft will expire on 31 May 2026.
 
 Copyright Notice
 
@@ -109,7 +109,7 @@ Table of Contents
 
 
 
-Mizrahi, et al.            Expires 29 May 2026                  [Page 2]
+Mizrahi, et al.            Expires 31 May 2026                  [Page 2]
 
 Internet-Draft              ICMPv6 Reflection              November 2025
 
@@ -155,8 +155,8 @@ Internet-Draft              ICMPv6 Reflection              November 2025
 
 3.  Use Cases
 
-   The ICMPv6 Reflection utility can also be used to determine how the
-   probe message's IPv6 header has changed along its delivery path.  For
+   The ICMPv6 Reflection utility can be used to determine how the probe
+   message's IPv6 header has changed along its delivery path.  For
    example, it can be used to determine the value of the Hop Limit, DSCP
    and ECN fields as received by the probed node.  The utility can also
    be used for determining how middleboxes have changed the Source
@@ -165,7 +165,7 @@ Internet-Draft              ICMPv6 Reflection              November 2025
 
 
 
-Mizrahi, et al.            Expires 29 May 2026                  [Page 3]
+Mizrahi, et al.            Expires 31 May 2026                  [Page 3]
 
 Internet-Draft              ICMPv6 Reflection              November 2025
 
@@ -221,7 +221,7 @@ Internet-Draft              ICMPv6 Reflection              November 2025
 
 
 
-Mizrahi, et al.            Expires 29 May 2026                  [Page 4]
+Mizrahi, et al.            Expires 31 May 2026                  [Page 4]
 
 Internet-Draft              ICMPv6 Reflection              November 2025
 
@@ -277,7 +277,7 @@ Internet-Draft              ICMPv6 Reflection              November 2025
 
 
 
-Mizrahi, et al.            Expires 29 May 2026                  [Page 5]
+Mizrahi, et al.            Expires 31 May 2026                  [Page 5]
 
 Internet-Draft              ICMPv6 Reflection              November 2025
 
@@ -333,7 +333,7 @@ Internet-Draft              ICMPv6 Reflection              November 2025
 
 
 
-Mizrahi, et al.            Expires 29 May 2026                  [Page 6]
+Mizrahi, et al.            Expires 31 May 2026                  [Page 6]
 
 Internet-Draft              ICMPv6 Reflection              November 2025
 
@@ -389,7 +389,7 @@ Internet-Draft              ICMPv6 Reflection              November 2025
 
 
 
-Mizrahi, et al.            Expires 29 May 2026                  [Page 7]
+Mizrahi, et al.            Expires 31 May 2026                  [Page 7]
 
 Internet-Draft              ICMPv6 Reflection              November 2025
 
@@ -445,7 +445,7 @@ Internet-Draft              ICMPv6 Reflection              November 2025
 
 
 
-Mizrahi, et al.            Expires 29 May 2026                  [Page 8]
+Mizrahi, et al.            Expires 31 May 2026                  [Page 8]
 
 Internet-Draft              ICMPv6 Reflection              November 2025
 
@@ -501,7 +501,7 @@ Internet-Draft              ICMPv6 Reflection              November 2025
 
 
 
-Mizrahi, et al.            Expires 29 May 2026                  [Page 9]
+Mizrahi, et al.            Expires 31 May 2026                  [Page 9]
 
 Internet-Draft              ICMPv6 Reflection              November 2025
 
@@ -557,7 +557,7 @@ Internet-Draft              ICMPv6 Reflection              November 2025
 
 
 
-Mizrahi, et al.            Expires 29 May 2026                 [Page 10]
+Mizrahi, et al.            Expires 31 May 2026                 [Page 10]
 
 Internet-Draft              ICMPv6 Reflection              November 2025
 
@@ -613,7 +613,7 @@ Authors' Addresses
 
 
 
-Mizrahi, et al.            Expires 29 May 2026                 [Page 11]
+Mizrahi, et al.            Expires 31 May 2026                 [Page 11]
 
 Internet-Draft              ICMPv6 Reflection              November 2025
 
@@ -669,4 +669,4 @@ Internet-Draft              ICMPv6 Reflection              November 2025
 
 
 
-Mizrahi, et al.            Expires 29 May 2026                 [Page 12]
+Mizrahi, et al.            Expires 31 May 2026                 [Page 12]

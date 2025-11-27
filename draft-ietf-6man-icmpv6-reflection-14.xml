@@ -164,7 +164,7 @@
     </section>
 
     <section anchor="UseCaseSec" title="Use Cases">
-      <t>The ICMPv6 Reflection utility can also be used to determine how the
+      <t>The ICMPv6 Reflection utility can be used to determine how the
       probe message's IPv6 header has changed along its delivery path. For
       example, it can be used to determine the value of the Hop Limit, DSCP and ECN fields
       as received by the probed node. The utility can also be used for 
